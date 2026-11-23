@@ -32,7 +32,7 @@
                 $featureTwo = $isMerchant ? 'Scan QR Sales' : 'Redeem Rewards';
                 $featureThree = $isMerchant ? 'Merchant Insights' : 'Discover Merchants';
             } else {
-                $heroTitle = 'Welcome to PKPMS Portal';
+                $heroTitle = 'Welcome to 柔佛州羅氏公会 Portal';
                 $heroDescription = 'Manage your loyalty program, track transactions, and engage with your members all in one place.';
                 $featureOne = 'Member Management';
                 $featureTwo = 'Transactions';
@@ -58,7 +58,7 @@
                 <div class="max-w-lg text-center">
                     <div class="mb-8 flex justify-center">
                         <div class="h-32 w-32 rounded-3xl bg-white flex items-center justify-center shadow-2xl">
-                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="PKPMS Logo" class="h-20 w-20 object-contain">
+                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="柔佛州羅氏公会 Logo" class="h-20 w-20 object-contain">
                         </div>
                     </div>
                     <h1 class="text-4xl font-bold text-white mb-4">{{ $heroTitle }}</h1>

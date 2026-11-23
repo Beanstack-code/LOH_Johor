@@ -12,7 +12,7 @@
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #e9eaf3;border-radius:14px;overflow:hidden;">
                     <tr>
                         <td style="background:#ed1c24;padding:18px 22px;color:#ffffff;">
-                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">PKPMS Portal</div>
+                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">柔佛州羅氏公会 Portal</div>
                             <div style="margin-top:6px;font-size:13px;opacity:.95;">Password Reset Request</div>
                         </td>
                     </tr>
@@ -20,7 +20,7 @@
                         <td style="padding:24px 22px;">
                             <p style="margin:0 0 12px;font-size:15px;line-height:1.6;">Hello {{ $name }},</p>
                             <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#566a7f;">
-                                We received a request to reset your PKPMS Portal password.
+                                We received a request to reset your 柔佛州羅氏公会 Portal password.
                                 Click the button below to continue.
                             </p>
 
@@ -50,7 +50,7 @@
                         </td>
                     </tr>
                 </table>
-                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} PKPMS. All rights reserved.</p>
+                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} 柔佛州羅氏公会. All rights reserved.</p>
             </td>
         </tr>
     </table>

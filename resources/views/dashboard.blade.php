@@ -5,7 +5,7 @@
                 <h2 class="text-xl font-semibold leading-tight text-[#2f3349]">{{ __('Dashboard Overview') }}</h2>
                 <p class="text-sm text-slate-500">Welcome back, {{ auth()->user()->name }}.</p>
             </article>
-            <span class="rounded-xl bg-[#edf4fd] px-3 py-1.5 text-xs font-semibold text-[#0d4f8b]">PKPMS Analytics</span>
+            <span class="rounded-xl bg-[#edf4fd] px-3 py-1.5 text-xs font-semibold text-[#0d4f8b]">柔佛州羅氏公会 Analytics</span>
         </div>
     </x-slot>
 

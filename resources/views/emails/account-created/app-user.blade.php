@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to PKPMS</title>
+    <title>Welcome to 柔佛州羅氏公会</title>
 </head>
 <body style="margin:0;padding:0;background:#f8fafc;font-family:Arial,Helvetica,sans-serif;color:#1f2937;">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f8fafc;padding:24px 12px;">
@@ -12,7 +12,7 @@
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
                     <tr>
                         <td style="background:#ed1c24;padding:18px 22px;color:#ffffff;">
-                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">PKPMS User</div>
+                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">柔佛州羅氏公会 User</div>
                             <div style="margin-top:6px;font-size:13px;opacity:.95;">Welcome — Set Your Password</div>
                         </td>
                     </tr>
@@ -20,7 +20,7 @@
                         <td style="padding:24px 22px;">
                             <p style="margin:0 0 12px;font-size:15px;line-height:1.6;">Hello,</p>
                             <p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#475569;">
-                                Your {{ strtolower($label) }} account has been created on the PKPMS platform.
+                                Your {{ strtolower($label) }} account has been created on the 柔佛州羅氏公会 platform.
                                 Please set your password to activate your account and start using the app.
                             </p>
 
@@ -50,7 +50,7 @@
                         </td>
                     </tr>
                 </table>
-                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} PKPMS. All rights reserved.</p>
+                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} 柔佛州羅氏公会. All rights reserved.</p>
             </td>
         </tr>
     </table>

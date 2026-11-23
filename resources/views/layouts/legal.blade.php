@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ $title ?? 'Privacy Policy' }} — {{ config('app.name', 'PKPMS Portal') }}</title>
+        <title>{{ $title ?? 'Privacy Policy' }} — {{ config('app.name', '柔佛州羅氏公会 Portal') }}</title>
 
         <!-- Favicon -->
         <link rel="icon" type="image/png" href="{{ asset('images/pkpms-logo.png') }}">
@@ -23,9 +23,9 @@
                 <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
                     <a href="{{ url('/') }}" class="flex items-center gap-3">
                         <div class="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="PKPMS Logo" class="h-7 w-7 object-contain">
+                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="柔佛州羅氏公会 Logo" class="h-7 w-7 object-contain">
                         </div>
-                        <span class="font-semibold text-slate-900">PKPMS Portal</span>
+                        <span class="font-semibold text-slate-900">柔佛州羅氏公会 Portal</span>
                     </a>
                     <a href="{{ route('login') }}" class="text-sm font-medium text-[#ed1c24] hover:underline">
                         Back to Login
@@ -41,7 +41,7 @@
 
             <footer class="border-t border-slate-200 bg-white">
                 <div class="max-w-5xl mx-auto px-6 py-6 text-center text-xs text-slate-500">
-                    &copy; {{ date('Y') }} PKPMS Portal. All rights reserved.
+                    &copy; {{ date('Y') }} 柔佛州羅氏公会 Portal. All rights reserved.
                 </div>
             </footer>
         </div>

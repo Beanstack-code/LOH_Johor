@@ -18,7 +18,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>PKPMS — Donation receipt</h1>
+        <h1>柔佛州羅氏公会 — Donation receipt</h1>
         <p>Official receipt for your contribution</p>
     </div>
     <div class="box">
@@ -56,7 +56,7 @@
     </div>
     <div class="footer">
         This document is your official donation receipt. Retain it for your records.
-        &copy; {{ date('Y') }} PKPMS.
+        &copy; {{ date('Y') }} 柔佛州羅氏公会.
     </div>
 </body>
 </html>

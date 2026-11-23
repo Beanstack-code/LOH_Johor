@@ -172,7 +172,7 @@ new #[Layout('layouts.app')] class extends Component {
             <div class="bg-slate-50 rounded-lg p-4 font-mono text-sm text-slate-700 break-all">
                 {{ $qrToken }}
             </div>
-            <p class="text-xs text-slate-500 mt-2">This QR code is signed with the application key. It is permanent and can be scanned by the PKPMS merchant app.</p>
+            <p class="text-xs text-slate-500 mt-2">This QR code is signed with the application key. It is permanent and can be scanned by the 柔佛州羅氏公会 merchant app.</p>
         </div>
 
         <!-- Transactions Section -->

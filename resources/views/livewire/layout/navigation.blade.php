@@ -22,7 +22,7 @@ new class extends Component
             <a href="{{ route('dashboard') }}" class="pk-card mb-6 flex items-center gap-3 p-4" wire:navigate>
                 <x-application-logo class="h-10 w-10" />
                 <div>
-                    <p class="text-sm font-semibold text-[#2f3349]">PKPMS Portal</p>
+                    <p class="text-sm font-semibold text-[#2f3349]">柔佛州羅氏公会 Portal</p>
                     <p class="text-xs text-slate-500" x-data="{ now: new Date() }" x-init="setInterval(() => now = new Date(), 1000)" x-text="now.toLocaleDateString('en-MY', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('en-MY', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true })"></p>
                 </div>
             </a>
@@ -155,7 +155,7 @@ new class extends Component
 
             <a href="{{ route('dashboard') }}" class="flex items-center gap-2" wire:navigate>
                 <x-application-logo class="h-8 w-8" />
-                <span class="text-sm font-semibold text-[#2f3349]">PKPMS</span>
+                <span class="text-sm font-semibold text-[#2f3349]">柔佛州羅氏公会</span>
             </a>
 
             <x-dropdown align="right" width="48">
@@ -181,7 +181,7 @@ new class extends Component
                 <div class="flex items-center justify-between">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2" wire:navigate>
                         <x-application-logo class="h-9 w-9" />
-                        <span class="font-semibold text-[#2f3349]">PKPMS Portal</span>
+                        <span class="font-semibold text-[#2f3349]">柔佛州羅氏公会 Portal</span>
                     </a>
                     <button @click="open = false" class="rounded-lg p-2 text-slate-500">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">

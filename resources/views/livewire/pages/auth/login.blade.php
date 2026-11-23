@@ -30,7 +30,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="flex justify-center lg:justify-start mb-6">
             <x-application-logo class="h-12 w-12" />
         </div>
-        <h1 class="text-2xl font-bold text-[#2f3349] mb-2">Welcome to PKPMS! 👋</h1>
+        <h1 class="text-2xl font-bold text-[#2f3349] mb-2">Welcome to 柔佛州羅氏公会! 👋</h1>
         <p class="text-sm text-[#566a7f]">Please sign-in to your account and start the adventure</p>
     </div>
 

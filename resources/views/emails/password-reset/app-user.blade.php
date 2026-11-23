@@ -12,7 +12,7 @@
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:620px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;">
                     <tr>
                         <td style="background:#ed1c24;padding:18px 22px;color:#ffffff;">
-                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">PKPMS User</div>
+                            <div style="font-size:18px;font-weight:700;letter-spacing:.3px;">柔佛州羅氏公会 User</div>
                             <div style="margin-top:6px;font-size:13px;opacity:.95;">{{ $label }} Password Reset</div>
                         </td>
                     </tr>
@@ -49,7 +49,7 @@
                         </td>
                     </tr>
                 </table>
-                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} PKPMS. All rights reserved.</p>
+                <p style="margin:12px 0 0;font-size:12px;color:#94a3b8;">&copy; {{ date('Y') }} 柔佛州羅氏公会. All rights reserved.</p>
             </td>
         </tr>
     </table>
