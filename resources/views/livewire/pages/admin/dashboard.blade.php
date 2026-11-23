@@ -207,7 +207,7 @@ new #[Layout('layouts.app')] class extends Component {
                         chart: { type: 'bar', height: 280, toolbar: { show: false } },
                         series: [{ name: 'New Members', data: @js($this->memberGrowthSeries) }],
                         xaxis: { categories: @js($this->memberGrowthLabels) },
-                        colors: ['#0d4f8b'],
+                        colors: ['#ed1c24'],
                         dataLabels: { enabled: false },
                         plotOptions: { bar: { borderRadius: 6, columnWidth: '50%' } },
                         grid: { borderColor: '#f1f5f9', strokeDashArray: 4 },
