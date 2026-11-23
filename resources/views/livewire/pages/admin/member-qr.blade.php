@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\Member;
-use App\Models\PointTransaction;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
@@ -23,15 +22,9 @@ new #[Layout('layouts.app')] class extends Component {
 
     public function with(): array
     {
-        $transactions = null;
         $qrToken = null;
 
         if ($this->selectedMember) {
-            $transactions = PointTransaction::with(['merchant'])
-                ->where('member_id', $this->selectedMember->id)
-                ->latest('occurred_at')
-                ->paginate(10);
-
             $hmac = hash_hmac('sha256', "PKPMS:MEMBER:{$this->selectedMember->id}", config('app.key'));
             $qrToken = "PKPMS:MEMBER:{$this->selectedMember->id}:{$hmac}";
         }
@@ -47,7 +40,6 @@ new #[Layout('layouts.app')] class extends Component {
 
         return [
             'members' => $membersQuery->limit(50)->get(),
-            'transactions' => $transactions,
             'qrToken' => $qrToken,
         ];
     }
@@ -57,7 +49,7 @@ new #[Layout('layouts.app')] class extends Component {
     <x-slot name="header">
         <div>
             <h1 class="pk-page-title">Member QR Codes</h1>
-            <p class="pk-subtitle">Generate and display QR codes for members to earn points</p>
+            <p class="pk-subtitle">Generate and display QR codes for members</p>
         </div>
     </x-slot>
 
@@ -121,10 +113,6 @@ new #[Layout('layouts.app')] class extends Component {
                         <p class="text-sm text-slate-700">{{ $selectedMember->phone ?? 'N/A' }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Total Points</p>
-                        <p class="text-lg font-bold text-[#ed1c24]">{{ number_format($selectedMember->total_points) }} pts</p>
-                    </div>
-                    <div>
                         <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Status</p>
                         @if($selectedMember->status === 'active')
                             <span class="pk-badge-success">Active</span>
@@ -142,7 +130,7 @@ new #[Layout('layouts.app')] class extends Component {
                     <div class="bg-white p-6 rounded-xl border-2 border-slate-200">
                         {!! QrCode::size(250)->generate($qrToken) !!}
                     </div>
-                    <p class="text-xs text-slate-500 text-center">Scan this QR code at participating merchants to earn points</p>
+                    <p class="text-xs text-slate-500 text-center">Scan this QR code to view your member details</p>
                     
                     <!-- Action Buttons -->
                     <div class="flex gap-3 mt-4">
@@ -172,85 +160,7 @@ new #[Layout('layouts.app')] class extends Component {
             <div class="bg-slate-50 rounded-lg p-4 font-mono text-sm text-slate-700 break-all">
                 {{ $qrToken }}
             </div>
-            <p class="text-xs text-slate-500 mt-2">This QR code is signed with the application key. It is permanent and can be scanned by the 柔佛州羅氏公会 merchant app.</p>
-        </div>
-
-        <!-- Transactions Section -->
-        <div class="pk-card p-5">
-            <h2 class="text-base font-semibold text-slate-800 mb-4">Transactions</h2>
-            
-            @if($transactions && $transactions->count() > 0)
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-slate-200">
-                        <thead class="bg-slate-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Date & Time</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Merchant</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Currency Amount</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Points Granted</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Status</th>
-                                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-600 tracking-wide">Reference</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-slate-200">
-                            @foreach($transactions as $transaction)
-                                <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <div class="text-sm font-medium text-slate-700">{{ $transaction->occurred_at->format('d M Y') }}</div>
-                                        <div class="text-xs text-slate-500">{{ $transaction->occurred_at->format('h:i A') }}</div>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <div class="flex items-center gap-2">
-                                            <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-xs font-semibold text-[#0d4f8b]">
-                                                {{ substr($transaction->merchant->company_name ?? 'N', 0, 1) }}
-                                            </div>
-                                            <div>
-                                                <div class="text-sm font-medium text-slate-700">{{ $transaction->merchant->company_name ?? 'N/A' }}</div>
-                                                <div class="text-xs text-slate-500">{{ $transaction->merchant->company_email ?? '' }}</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <span class="text-sm font-medium text-slate-700">RM {{ number_format($transaction->currency_amount, 2) }}</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <span class="text-sm font-bold text-[#ed1c24]">{{ number_format($transaction->points) }} pts</span>
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        @if($transaction->status === 'completed')
-                                            <span class="pk-badge-success">Completed</span>
-                                        @elseif($transaction->status === 'pending')
-                                            <span class="pk-badge-warning">Pending</span>
-                                        @else
-                                            <span class="pk-badge-danger">{{ ucfirst($transaction->status) }}</span>
-                                        @endif
-                                    </td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <span class="text-xs font-mono text-slate-600">
-                                            {{ $transaction->reference_number ?? '-' }}
-                                        </span>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Pagination -->
-                @if($transactions->hasPages())
-                    <div class="mt-4">
-                        {{ $transactions->links() }}
-                    </div>
-                @endif
-            @else
-                <div class="text-center py-8">
-                    <svg class="w-12 h-12 mx-auto text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                    </svg>
-                    <p class="text-sm font-medium text-slate-500">No transactions yet</p>
-                    <p class="text-xs text-slate-400">Transactions will appear here</p>
-                </div>
-            @endif
+            <p class="text-xs text-slate-500 mt-2">This QR code is signed with the application key. It is permanent and can be scanned by the 柔佛州羅氏公会.</p>
         </div>
     @else
         <div class="pk-card p-12 text-center">
