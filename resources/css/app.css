@@ -10,8 +10,9 @@
     :root {
         --pk-red: #ed1c24;
         --pk-red-dark: #ca111b;
-        --pk-blue: #0d4f8b;
-        --pk-blue-soft: #edf4fd;
+        --pk-blue: #ed1c24;
+        --pk-blue-soft: #fff0f1;
+        --pk-red-soft: #fff0f1;
         --pk-bg: #f5f6fa;
         --pk-surface: #ffffff;
         --pk-border: #e9eaf3;
@@ -51,13 +52,18 @@
     }
 
     .pk-sidebar-link:hover {
-        background-color: #f3f4fa;
+        background-color: #fff5f5;
         color: var(--pk-text-strong);
+    }
+
+    .pk-brand-icon {
+        background-color: var(--pk-red-soft);
+        color: var(--pk-red);
     }
 
     .pk-sidebar-link-active {
         color: var(--pk-red);
-        background-color: rgb(237 28 36 / 0.1);
+        background-color: var(--pk-red-soft);
     }
 
     .pk-page-title {
