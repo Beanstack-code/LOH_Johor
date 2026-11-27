@@ -270,7 +270,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type === 'error' ? 'error' : 'success';
     }
 
@@ -286,8 +286,8 @@ new #[Layout('layouts.app')] class extends Component {
 
 <x-slot name="header">
     <div>
-        <h1 class="pk-page-title">Role-Based Access Control</h1>
-        <p class="pk-subtitle">Super Admin can create, edit and delete roles with configurable permissions.</p>
+        <h1 class="pk-page-title">{{ __('Role-Based Access Control') }}</h1>
+        <p class="pk-subtitle">{{ __('Super Admin can create, edit and delete roles with configurable permissions.') }}</p>
     </div>
 </x-slot>
 
@@ -323,7 +323,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     {{-- Search bar --}}
     <section class="pk-filter-bar">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by role name..." class="pk-input w-full sm:max-w-sm">
+        <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by role name...') }}" class="pk-input w-full sm:max-w-sm">
     </section>
 
 <div class="grid gap-6 xl:grid-cols-3">
@@ -340,7 +340,7 @@ new #[Layout('layouts.app')] class extends Component {
         @rbac-form-open.window="open = true"
     >
         <div class="flex items-center justify-between gap-3">
-            <h2 class="text-base font-semibold text-slate-800">{{ $editingRoleId ? 'Edit Role' : 'Create Role' }}</h2>
+            <h2 class="text-base font-semibold text-slate-800">{{ __($editingRoleId ? 'Edit Role' : 'Create Role') }}</h2>
             <div class="flex items-center gap-2">
                 @if($editingRoleId)
                     @can('roles.create')
@@ -369,11 +369,11 @@ new #[Layout('layouts.app')] class extends Component {
 
             <form wire:submit="saveRole" class="mt-4 space-y-4">
                 <x-admin.form.group label="Role Name *">
-                    <input type="text" wire:model="name" class="{{ $errors->has('name') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" placeholder="Example: Finance Admin">
+                    <input type="text" wire:model="name" class="{{ $errors->has('name') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" placeholder="{{ __('Example: Finance Admin') }}">
                     @error('name')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                 </x-admin.form.group>
                 <x-admin.form.group label="Login Email {{ $editingRoleId ? '' : '*' }}">
-                    <input type="email" wire:model="accountEmail" class="{{ $errors->has('accountEmail') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" placeholder="role-login@company.com">
+                    <input type="email" wire:model="accountEmail" class="{{ $errors->has('accountEmail') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" placeholder="{{ __('role-login@company.com') }}">
                     @error('accountEmail')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     <p class="mt-1 text-xs text-slate-400">
                         @if($editingRoleId)
@@ -401,13 +401,13 @@ new #[Layout('layouts.app')] class extends Component {
                     </div>
                 </x-admin.form.group>
                 @if(auth()->user()->can('roles.create') || auth()->user()->can('roles.edit'))
-                    <button class="pk-btn-primary w-full">{{ $editingRoleId ? 'Update Role' : 'Create Role' }}</button>
+                    <button class="pk-btn-primary w-full">{{ __($editingRoleId ? 'Update Role' : 'Create Role') }}</button>
                 @endif
             </form>
             @if($lastCreatedPassword)
                 <div class="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2">
-                    <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">Temporary login password</p>
-                    <p class="mt-1 text-sm text-emerald-800">Temporary password: <span class="font-mono font-semibold">{{ $lastCreatedPassword }}</span></p>
+                    <p class="text-xs font-semibold uppercase tracking-wide text-emerald-700">{{ __('Temporary login password') }}</p>
+                    <p class="mt-1 text-sm text-emerald-800">{{ __('Temporary password:') }} <span class="font-mono font-semibold">{{ $lastCreatedPassword }}</span></p>
                 </div>
             @endif
         </div>
@@ -421,9 +421,9 @@ new #[Layout('layouts.app')] class extends Component {
                     <div class="flex items-start justify-between gap-2">
                         <p class="text-sm font-semibold text-slate-800">{{ $role->name }}</p>
                         @if($role->name === 'Super Admin')
-                            <span class="pk-badge-danger">Full system control</span>
+                            <span class="pk-badge-danger">{{ __('Full system control') }}</span>
                         @else
-                            <span class="pk-badge-success">Scoped administration</span>
+                            <span class="pk-badge-success">{{ __('Scoped administration') }}</span>
                         @endif
                     </div>
                     @php
@@ -436,7 +436,7 @@ new #[Layout('layouts.app')] class extends Component {
                         }
                     @endphp
                     @if(empty($mobileGrouped))
-                        <p class="mt-2 text-xs text-slate-400">No permissions</p>
+                        <p class="mt-2 text-xs text-slate-400">{{ __('No permissions') }}</p>
                     @else
                         <div class="mt-2 space-y-1.5">
                             @foreach($mobileGrouped as $resource => $actions)
@@ -451,12 +451,12 @@ new #[Layout('layouts.app')] class extends Component {
                     @endif
                     @if(auth()->user()->can('roles.edit') || auth()->user()->can('roles.delete'))
                         <div class="mt-3 grid grid-cols-2 gap-2">
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="viewRole({{ $role->id }})">View</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="viewRole({{ $role->id }})">{{ __('View') }}</button>
                             @can('roles.edit')
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editRole({{ $role->id }})">Edit</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editRole({{ $role->id }})">{{ __('Edit') }}</button>
                             @endcan
                             @can('roles.delete')
-                            <button class="pk-btn-secondary px-2 py-2 text-xs text-red-600" wire:click="deleteRole({{ $role->id }})">Delete</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs text-red-600" wire:click="deleteRole({{ $role->id }})">{{ __('Delete') }}</button>
                             @endcan
                         </div>
                     @endif
@@ -471,11 +471,11 @@ new #[Layout('layouts.app')] class extends Component {
                     <thead>
                         <tr>
                             <th class="whitespace-nowrap w-40">
-                                <button type="button" wire:click="sortBy('name')" class="inline-flex items-center gap-1">Role <span>{{ $this->sortIcon('name') }}</span></button>
+                                <button type="button" wire:click="sortBy('name')" class="inline-flex items-center gap-1">{{ __('Role') }} <span>{{ $this->sortIcon('name') }}</span></button>
                             </th>
-                            <th class="whitespace-nowrap w-36">Access Level</th>
-                            <th>Permissions</th>
-                            <th class="whitespace-nowrap w-32">Action</th>
+                            <th class="whitespace-nowrap w-36">{{ __('Access Level') }}</th>
+                            <th>{{ __('Permissions') }}</th>
+                            <th class="whitespace-nowrap w-32">{{ __('Action') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -484,9 +484,9 @@ new #[Layout('layouts.app')] class extends Component {
                                 <td class="whitespace-nowrap font-semibold text-slate-700">{{ $role->name }}</td>
                                 <td class="whitespace-nowrap">
                                     @if($role->name === 'Super Admin')
-                                        <span class="pk-badge-danger">Full system control</span>
+                                        <span class="pk-badge-danger">{{ __('Full system control') }}</span>
                                     @else
-                                        <span class="pk-badge-success">Scoped administration</span>
+                                        <span class="pk-badge-success">{{ __('Scoped administration') }}</span>
                                     @endif
                                 </td>
                                 <td class="py-2">
@@ -500,7 +500,7 @@ new #[Layout('layouts.app')] class extends Component {
                                         }
                                     @endphp
                                     @if(empty($grouped))
-                                        <span class="text-xs text-slate-400">No permissions</span>
+                                        <span class="text-xs text-slate-400">{{ __('No permissions') }}</span>
                                     @else
                                         <div class="flex flex-wrap gap-y-2 gap-x-3">
                                             @foreach($grouped as $resource => $actions)
@@ -515,12 +515,12 @@ new #[Layout('layouts.app')] class extends Component {
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap text-right">
-                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="viewRole({{ $role->id }})">View</button>
+                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="viewRole({{ $role->id }})">{{ __('View') }}</button>
                                     @can('roles.edit')
-                                        <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="editRole({{ $role->id }})">Edit</button>
+                                        <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="editRole({{ $role->id }})">{{ __('Edit') }}</button>
                                     @endcan
                                     @can('roles.delete')
-                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-red-600" wire:click="deleteRole({{ $role->id }})">Delete</button>
+                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-red-600" wire:click="deleteRole({{ $role->id }})">{{ __('Delete') }}</button>
                                     @endcan
                                 </td>
                             </tr>

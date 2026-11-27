@@ -12,5 +12,5 @@
 @endphp
 
 <span {{ $attributes->merge(['class' => $classes]) }}>
-    {{ ucwords($s) }}
+    {{ __(ucwords($s)) }}
 </span>

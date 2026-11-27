@@ -86,8 +86,8 @@ new #[Layout('layouts.app')] class extends Component {
 
 <x-slot name="header">
     <div>
-        <h1 class="pk-page-title">Admin Dashboard</h1>
-        <p class="pk-subtitle">Overview statistics, activity and trend monitoring.</p>
+        <h1 class="pk-page-title">{{ __('Admin Dashboard') }}</h1>
+        <p class="pk-subtitle">{{ __('Overview statistics, activity and trend monitoring.') }}</p>
     </div>
 </x-slot>
 
@@ -100,7 +100,7 @@ new #[Layout('layouts.app')] class extends Component {
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">Total Members</p>
+                    <p class="pk-subtitle">{{ __('Total Members') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['total_members']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50">
@@ -118,21 +118,21 @@ new #[Layout('layouts.app')] class extends Component {
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">Expiring Subscriptions</p>
+                    <p class="pk-subtitle">{{ __('Expiring Subscriptions') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['expiring_subs_count']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50">
                     <svg class="h-5 w-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                 </span>
             </div>
-            <p class="mt-2 text-xs text-slate-400">Expiring within 30 days</p>
+            <p class="mt-2 text-xs text-slate-400">{{ __('Expiring within 30 days') }}</p>
         </article>
 
         {{-- Fraud Alerts --}}
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">Fraud Alerts (Open)</p>
+                    <p class="pk-subtitle">{{ __('Fraud Alerts (Open)') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['fraud_open']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-50">
@@ -153,42 +153,42 @@ new #[Layout('layouts.app')] class extends Component {
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">Fraud Resolved Today</p>
+                    <p class="pk-subtitle">{{ __('Fraud Resolved Today') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['fraud_resolved_today']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50">
                     <svg class="h-5 w-5 text-emerald-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m5 13 4 4L19 7"/></svg>
                 </span>
             </div>
-            <p class="mt-2 text-xs text-slate-400">Resolved + false positives</p>
+            <p class="mt-2 text-xs text-slate-400">{{ __('Resolved + false positives') }}</p>
         </article>
 
         {{-- Fraud Acknowledged --}}
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">Fraud Acknowledged</p>
+                    <p class="pk-subtitle">{{ __('Fraud Acknowledged') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['fraud_acknowledged']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-50">
                     <svg class="h-5 w-5 text-amber-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
                 </span>
             </div>
-            <p class="mt-2 text-xs text-slate-400">Waiting final resolution</p>
+            <p class="mt-2 text-xs text-slate-400">{{ __('Waiting final resolution') }}</p>
         </article>
 
         {{-- Fraud False Positive Today --}}
         <article class="pk-card p-4">
             <div class="flex items-start justify-between">
                 <div>
-                    <p class="pk-subtitle">False Positive Today</p>
+                    <p class="pk-subtitle">{{ __('False Positive Today') }}</p>
                     <p class="mt-1 text-2xl font-semibold text-slate-800">{{ number_format($this->kpis['fraud_false_positive_today']) }}</p>
                 </div>
                 <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100">
                     <svg class="h-5 w-5 text-slate-500" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4m5-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
                 </span>
             </div>
-            <p class="mt-2 text-xs text-slate-400">Marked as not suspicious today</p>
+            <p class="mt-2 text-xs text-slate-400">{{ __('Marked as not suspicious today') }}</p>
         </article>
 
     </section>
@@ -197,8 +197,8 @@ new #[Layout('layouts.app')] class extends Component {
     <section class="grid gap-6">
         <article class="pk-card p-5">
             <div class="mb-4">
-                <h2 class="text-base font-semibold text-slate-800">Member Registration Trend</h2>
-                <p class="pk-subtitle text-xs">New members registered per month (last 6 months)</p>
+                <h2 class="text-base font-semibold text-slate-800">{{ __('Member Registration Trend') }}</h2>
+                <p class="pk-subtitle text-xs">{{ __('New members registered per month (last 6 months)') }}</p>
             </div>
             <div
                 x-data
@@ -224,8 +224,8 @@ new #[Layout('layouts.app')] class extends Component {
         {{-- Expiring Subscriptions --}}
         <article class="pk-card p-5">
             <div class="mb-4 flex items-center justify-between">
-                <h2 class="text-base font-semibold text-slate-800">Expiring Soon</h2>
-                <span class="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">Next 30 days</span>
+                <h2 class="text-base font-semibold text-slate-800">{{ __('Expiring Soon') }}</h2>
+                <span class="rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">{{ __('Next 30 days') }}</span>
             </div>
             @forelse($this->expiringSubscriptions as $sub)
                 <div class="flex items-start gap-3 border-b border-slate-100 py-3 last:border-0 last:pb-0">
@@ -237,7 +237,7 @@ new #[Layout('layouts.app')] class extends Component {
                     </span>
                     <div class="min-w-0 flex-1">
                         <p class="truncate text-sm font-semibold text-slate-700">{{ $sub['name'] }}</p>
-                        <p class="text-xs text-slate-400">{{ $sub['type'] }} · Expires {{ $sub['ends_at'] }}</p>
+                        <p class="text-xs text-slate-400">{{ __($sub['type']) }} · {{ __('Expires') }} {{ $sub['ends_at'] }}</p>
                     </div>
                     <span @class([
                         'shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold',
@@ -250,7 +250,7 @@ new #[Layout('layouts.app')] class extends Component {
             @empty
                 <div class="flex flex-col items-center justify-center py-6 text-center">
                     <svg class="mb-2 h-8 w-8 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <p class="text-sm text-slate-400">No subscriptions expiring soon.</p>
+                    <p class="text-sm text-slate-400">{{ __('No subscriptions expiring soon.') }}</p>
                 </div>
             @endforelse
         </article>
@@ -258,8 +258,8 @@ new #[Layout('layouts.app')] class extends Component {
         {{-- Active Fundraising Campaigns --}}
         <article class="pk-card p-5">
             <div class="mb-4 flex items-center justify-between">
-                <h2 class="text-base font-semibold text-slate-800">Fundraising Campaigns</h2>
-                <a href="{{ route('admin.fundraising') }}" class="text-xs font-medium text-[#ed1c24] hover:underline">View all</a>
+                <h2 class="text-base font-semibold text-slate-800">{{ __('Fundraising Campaigns') }}</h2>
+                <a href="{{ route('admin.fundraising') }}" class="text-xs font-medium text-[#9a7300] hover:underline">{{ __('View all') }}</a>
             </div>
             @forelse($this->activeCampaigns as $campaign)
                 <div class="mb-4 last:mb-0">
@@ -280,7 +280,7 @@ new #[Layout('layouts.app')] class extends Component {
             @empty
                 <div class="flex flex-col items-center justify-center py-6 text-center">
                     <svg class="mb-2 h-8 w-8 text-slate-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-                    <p class="text-sm text-slate-400">No active campaigns at the moment.</p>
+                    <p class="text-sm text-slate-400">{{ __('No active campaigns at the moment.') }}</p>
                 </div>
             @endforelse
         </article>

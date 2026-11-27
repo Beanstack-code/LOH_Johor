@@ -30,8 +30,8 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="flex justify-center lg:justify-start mb-6">
             <x-application-logo class="h-12 w-12" />
         </div>
-        <h1 class="text-2xl font-bold text-[#2f3349] mb-2">Welcome to 柔佛州羅氏公会! 👋</h1>
-        <p class="text-sm text-[#566a7f]">Please sign-in to your account and start the adventure</p>
+        <h1 class="text-2xl font-bold text-[#2f3349] mb-2">{{ __('Welcome to 柔佛州羅氏公会! 👋') }}</h1>
+        <p class="text-sm text-[#566a7f]">{{ __('Please sign-in to your account and start the adventure') }}</p>
     </div>
 
     <!-- Session Status -->
@@ -50,7 +50,7 @@ new #[Layout('layouts.guest')] class extends Component
             <div class="flex items-center justify-between mb-1.5">
                 <x-input-label for="password" :value="__('Password')" class="pk-label !mb-0" />
                 @if (Route::has('password.request'))
-                    <a class="text-xs font-medium text-[#ed1c24] hover:text-[#ca111b] transition" href="{{ route('password.request') }}" wire:navigate>
+                    <a class="text-xs font-medium text-[#9a7300] hover:text-[#795b00] transition" href="{{ route('password.request') }}" wire:navigate>
                         {{ __('Forgot Password?') }}
                     </a>
                 @endif
@@ -67,7 +67,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         <!-- Remember Me -->
         <div class="flex items-center">
-            <input wire:model="form.remember" id="remember" type="checkbox" class="h-4 w-4 rounded border-[#dfe1ec] text-[#ed1c24] focus:ring-2 focus:ring-[#ed1c24] focus:ring-offset-0" name="remember">
+            <input wire:model="form.remember" id="remember" type="checkbox" class="h-4 w-4 rounded border-[#dfe1ec] text-[#9a7300] focus:ring-2 focus:ring-[#9a7300] focus:ring-offset-0" name="remember">
             <label for="remember" class="ml-2 text-sm font-medium text-[#566a7f] cursor-pointer">
                 {{ __('Remember Me') }}
             </label>
@@ -84,7 +84,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="mt-6 text-center">
             <p class="text-sm text-[#566a7f]">
                 New on our platform? 
-                <a href="{{ route('register') }}" wire:navigate class="font-semibold text-[#ed1c24] hover:text-[#ca111b] transition">
+                <a href="{{ route('register') }}" wire:navigate class="font-semibold text-[#9a7300] hover:text-[#795b00] transition">
                     Create an account
                 </a>
             </p>

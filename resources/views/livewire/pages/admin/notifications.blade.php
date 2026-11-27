@@ -100,7 +100,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type;
         $this->js("
             window.dispatchEvent(new CustomEvent('pk-notification-toast', { detail: { message: " . json_encode($message) . ", type: " . json_encode($type) . " } }));
@@ -231,8 +231,8 @@ new #[Layout('layouts.app')] class extends Component {
 
 <x-slot name="header">
     <div>
-        <h1 class="pk-page-title">Push Notification Manager</h1>
-        <p class="pk-subtitle">Send push notifications to Flutter app users via Firebase Cloud Messaging.</p>
+        <h1 class="pk-page-title">{{ __('Push Notification Manager') }}</h1>
+        <p class="pk-subtitle">{{ __('Send push notifications to Flutter app users via Firebase Cloud Messaging.') }}</p>
     </div>
 </x-slot>
 
@@ -256,13 +256,13 @@ new #[Layout('layouts.app')] class extends Component {
 
     {{-- Search and Filter bar --}}
     <section class="pk-filter-bar">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by title..." class="pk-input w-full sm:max-w-sm">
+        <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by title...') }}" class="pk-input w-full sm:max-w-sm">
         <select wire:model.live="statusFilter" class="pk-input w-full sm:max-w-xs">
-            <option value="">All Status</option>
-            <option value="draft">Draft</option>
-            <option value="scheduled">Scheduled</option>
-            <option value="processing">Processing</option>
-            <option value="sent">Sent</option>
+            <option value="">{{ __('All Status') }}</option>
+            <option value="draft">{{ __('Draft') }}</option>
+            <option value="scheduled">{{ __('Scheduled') }}</option>
+            <option value="processing">{{ __('Processing') }}</option>
+            <option value="sent">{{ __('Sent') }}</option>
         </select>
     </section>
 
@@ -278,11 +278,11 @@ new #[Layout('layouts.app')] class extends Component {
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 <div>
-                    <p class="font-semibold">Sending…</p>
-                    <p class="text-xs text-amber-800/90">Status is <span class="font-mono">processing</span> until Firebase delivery finishes. This updates automatically.</p>
+                    <p class="font-semibold">{{ __('Sending…') }}</p>
+                    <p class="text-xs text-amber-800/90">{{ __('Status is') }} <span class="font-mono">processing</span> {{ __('until Firebase delivery finishes. This updates automatically.') }}</p>
                 </div>
             @else
-                <p class="text-xs">Updating send status…</p>
+                <p class="text-xs">{{ __('Updating send status…') }}</p>
             @endif
         </div>
     @endif
@@ -336,9 +336,9 @@ new #[Layout('layouts.app')] class extends Component {
         </div>
 
         <div class="flex items-center justify-between gap-3">
-            <h2 class="text-base font-semibold text-slate-800">{{ $isViewMode ? 'View Notification' : 'Send Notification' }}</h2>
+            <h2 class="text-base font-semibold text-slate-800">{{ __($isViewMode ? 'View Notification' : 'Send Notification') }}</h2>
             @if($isViewMode)
-                <button type="button" class="pk-btn-primary shrink-0" wire:click="startCreate">Create New</button>
+                <button type="button" class="pk-btn-primary shrink-0" wire:click="startCreate">{{ __('Create New') }}</button>
             @endif
             <button
                 type="button"
@@ -373,63 +373,63 @@ new #[Layout('layouts.app')] class extends Component {
             <form wire:submit="saveDraft" class="mt-4 space-y-3">
                 <x-admin.form.group label="Title *">
                     <div x-show="activeLang === 'en'" x-cloak>
-                        <input class="{{ $errors->has('title') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title" placeholder="e.g. New Rewards Available" @disabled($isViewMode)>
+                        <input class="{{ $errors->has('title') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title" placeholder="{{ __('e.g. New Rewards Available') }}" @disabled($isViewMode)>
                         @error('title')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'ms'" x-cloak>
-                        <input class="{{ $errors->has('title_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_ms" placeholder="Malay title" @disabled($isViewMode)>
+                        <input class="{{ $errors->has('title_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_ms" placeholder="{{ __('Malay title') }}" @disabled($isViewMode)>
                         @error('title_ms')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'zh'" x-cloak>
-                        <input class="{{ $errors->has('title_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_zh" placeholder="Chinese title" @disabled($isViewMode)>
+                        <input class="{{ $errors->has('title_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_zh" placeholder="{{ __('Chinese title') }}" @disabled($isViewMode)>
                         @error('title_zh')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                 </x-admin.form.group>
 
                 <x-admin.form.group label="Message *">
                     <div x-show="activeLang === 'en'" x-cloak>
-                        <textarea class="{{ $errors->has('message') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message" rows="3" placeholder="Notification message body..." @disabled($isViewMode)></textarea>
+                        <textarea class="{{ $errors->has('message') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message" rows="3" placeholder="{{ __('Notification message body...') }}" @disabled($isViewMode)></textarea>
                         @error('message')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'ms'" x-cloak>
-                        <textarea class="{{ $errors->has('message_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message_ms" rows="3" placeholder="Malay message" @disabled($isViewMode)></textarea>
+                        <textarea class="{{ $errors->has('message_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message_ms" rows="3" placeholder="{{ __('Malay message') }}" @disabled($isViewMode)></textarea>
                         @error('message_ms')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'zh'" x-cloak>
-                        <textarea class="{{ $errors->has('message_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message_zh" rows="3" placeholder="Chinese message" @disabled($isViewMode)></textarea>
+                        <textarea class="{{ $errors->has('message_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="message_zh" rows="3" placeholder="{{ __('Chinese message') }}" @disabled($isViewMode)></textarea>
                         @error('message_zh')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                 </x-admin.form.group>
 
-                <p class="mt-1 text-xs text-slate-500">Hint: Use the tabs to input EN, Malay (MS), and Chinese (ZH). If MS/ZH is empty, the app will fall back to English.</p>
+                <p class="mt-1 text-xs text-slate-500">{{ __('Hint: Use the tabs to input EN, Malay (MS), and Chinese (ZH). If MS/ZH is empty, the app will fall back to English.') }}</p>
 
                 <x-admin.form.group label="Type">
                     <select class="pk-input" wire:model="notification_type" @disabled($isViewMode)>
-                        <option value="announcement">Announcement</option>
-                        <option value="reminder">Reminder</option>
-                        <option value="promotional">Promotional</option>
-                        <option value="transaction">Transaction</option>
-                        <option value="system">System</option>
+                        <option value="announcement">{{ __('Announcement') }}</option>
+                        <option value="reminder">{{ __('Reminder') }}</option>
+                        <option value="promotional">{{ __('Promotional') }}</option>
+                        <option value="transaction">{{ __('Transaction') }}</option>
+                        <option value="system">{{ __('System') }}</option>
                     </select>
                 </x-admin.form.group>
 
                 <x-admin.form.group label="Schedule (optional)">
                     <input type="datetime-local" class="pk-input" wire:model="scheduled_at" @disabled($isViewMode)>
-                    <p class="mt-1 text-xs text-slate-500">Leave blank to save as draft or send immediately</p>
+                    <p class="mt-1 text-xs text-slate-500">{{ __('Leave blank to save as draft or send immediately') }}</p>
                 </x-admin.form.group>
 
                 @can('notifications.create')
                 @if(! $isViewMode)
                 <div class="grid grid-cols-2 gap-2">
                     <button type="submit" wire:loading.attr="disabled" wire:target="saveDraft" class="pk-btn-secondary inline-flex items-center justify-center gap-2">
-                        <span wire:loading.remove wire:target="saveDraft">Save / schedule</span>
+                        <span wire:loading.remove wire:target="saveDraft">{{ __('Save / schedule') }}</span>
                         <span wire:loading wire:target="saveDraft" class="inline-flex items-center gap-2">
                             <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                             Saving…
                         </span>
                     </button>
                     <button type="button" wire:click="sendPush" wire:loading.attr="disabled" wire:target="sendPush" class="pk-btn-primary inline-flex items-center justify-center gap-2">
-                        <span wire:loading.remove wire:target="sendPush">Send now</span>
+                        <span wire:loading.remove wire:target="sendPush">{{ __('Send now') }}</span>
                         <span wire:loading wire:target="sendPush" class="inline-flex items-center gap-2">
                             <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                             Sending…
@@ -455,19 +455,19 @@ new #[Layout('layouts.app')] class extends Component {
                         <x-admin.status-badge :status="$notification->status" />
                     </div>
                     <dl class="mt-3 space-y-1 text-xs text-slate-600">
-                        <div class="flex justify-between gap-3"><dt>Type</dt><dd>{{ ucfirst(str_replace('_', ' ', $notification->notification_type)) }}</dd></div>
-                        <div class="flex justify-between gap-3"><dt>Scheduled</dt><dd>{{ optional($notification->scheduled_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
-                        <div class="flex justify-between gap-3"><dt>Delivery</dt><dd>{{ optional($notification->sent_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
+                        <div class="flex justify-between gap-3"><dt>{{ __('Type') }}</dt><dd>{{ ucfirst(str_replace('_', ' ', $notification->notification_type)) }}</dd></div>
+                        <div class="flex justify-between gap-3"><dt>{{ __('Scheduled') }}</dt><dd>{{ optional($notification->scheduled_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
+                        <div class="flex justify-between gap-3"><dt>{{ __('Delivery') }}</dt><dd>{{ optional($notification->sent_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
                     </dl>
                     <div class="mt-3 flex gap-2">
-                        <button type="button" class="pk-btn-secondary flex-1 text-xs" wire:click="viewNotification({{ $notification->id }})">View</button>
+                        <button type="button" class="pk-btn-secondary flex-1 text-xs" wire:click="viewNotification({{ $notification->id }})">{{ __('View') }}</button>
                         @can('notifications.delete')
                         <button
                             type="button"
                             class="flex-1 rounded-lg border border-rose-200 bg-rose-50 px-2 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
                             wire:click="deleteNotification({{ $notification->id }})"
                             wire:confirm="Delete this push notification? This cannot be undone."
-                        >Delete</button>
+                        >{{ __('Delete') }}</button>
                         @endcan
                     </div>
                 </article>
@@ -481,17 +481,17 @@ new #[Layout('layouts.app')] class extends Component {
                     <thead>
                         <tr>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('title')" class="inline-flex items-center gap-1">Title <span>{{ $this->sortIcon('title') }}</span></button>
+                                <button type="button" wire:click="sortBy('title')" class="inline-flex items-center gap-1">{{ __('Title') }} <span>{{ $this->sortIcon('title') }}</span></button>
                             </th>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('notification_type')" class="inline-flex items-center gap-1">Type <span>{{ $this->sortIcon('notification_type') }}</span></button>
+                                <button type="button" wire:click="sortBy('notification_type')" class="inline-flex items-center gap-1">{{ __('Type') }} <span>{{ $this->sortIcon('notification_type') }}</span></button>
                             </th>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">Status <span>{{ $this->sortIcon('status') }}</span></button>
+                                <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">{{ __('Status') }} <span>{{ $this->sortIcon('status') }}</span></button>
                             </th>
-                            <th class="whitespace-nowrap">Scheduled</th>
-                            <th class="whitespace-nowrap">Delivery</th>
-                            <th class="whitespace-nowrap text-right">Actions</th>
+                            <th class="whitespace-nowrap">{{ __('Scheduled') }}</th>
+                            <th class="whitespace-nowrap">{{ __('Delivery') }}</th>
+                            <th class="whitespace-nowrap text-right">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -508,14 +508,14 @@ new #[Layout('layouts.app')] class extends Component {
                                 <td class="whitespace-nowrap">{{ optional($notification->scheduled_at)->format('d M Y, h:i A') ?: '-' }}</td>
                                 <td class="whitespace-nowrap">{{ optional($notification->sent_at)->format('d M Y, h:i A') ?: '-' }}</td>
                                 <td class="whitespace-nowrap text-right space-x-1">
-                                    <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="viewNotification({{ $notification->id }})">View</button>
+                                    <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="viewNotification({{ $notification->id }})">{{ __('View') }}</button>
                                     @can('notifications.delete')
                                     <button
                                         type="button"
                                         class="rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
                                         wire:click="deleteNotification({{ $notification->id }})"
                                         wire:confirm="Delete this push notification? This cannot be undone."
-                                    >Delete</button>
+                                    >{{ __('Delete') }}</button>
                                     @endcan
                                 </td>
                             </tr>

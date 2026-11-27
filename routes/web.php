@@ -4,6 +4,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+Route::post('/locale', function (\Illuminate\Http\Request $request) {
+    $validated = $request->validate(['locale' => ['required', 'in:en,zh_CN']]);
+    $request->session()->put('locale', $validated['locale']);
+
+    return back();
+})->name('locale.switch');
+
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->route('dashboard');

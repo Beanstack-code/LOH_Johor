@@ -498,7 +498,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type === 'error' ? 'error' : 'success';
     }
 
@@ -518,11 +518,11 @@ new #[Layout('layouts.app')] class extends Component {
 <x-slot name="header">
     <div class="flex items-center justify-between gap-3">
         <div>
-            <h1 class="pk-page-title">Member Management</h1>
-            <p class="pk-subtitle">Search and manage member profiles and subscriptions.</p>
+            <h1 class="pk-page-title">{{ __('Member Management') }}</h1>
+            <p class="pk-subtitle">{{ __('Search and manage member profiles and subscriptions.') }}</p>
         </div>
         @can('members.create')
-        <button type="button" onclick="window.dispatchEvent(new CustomEvent('member-create-request'))" class="pk-btn-primary shrink-0">New Member</button>
+        <button type="button" onclick="window.dispatchEvent(new CustomEvent('member-create-request'))" class="pk-btn-primary shrink-0">{{ __('New Member') }}</button>
         @endcan
     </div>
 </x-slot>
@@ -536,30 +536,30 @@ new #[Layout('layouts.app')] class extends Component {
 
     <section class="pk-card p-4">
         <div class="grid gap-3 md:grid-cols-5">
-            <input type="text" wire:model.live.debounce.300ms="search" class="pk-input" placeholder="Search name or email">
+            <input type="text" wire:model.live.debounce.300ms="search" class="pk-input" placeholder="{{ __('Search name or email') }}">
             <select wire:model.live="statusFilter" class="pk-input">
-                <option value="">All statuses</option>
-                <option value="active">Active</option>
-                <option value="pending_subscription">Pending subscription</option>
-                <option value="suspended">Suspended</option>
-                <option value="deactivated">Deactivated</option>
+                <option value="">{{ __('All statuses') }}</option>
+                <option value="active">{{ __('Active') }}</option>
+                <option value="pending_subscription">{{ __('Pending subscription') }}</option>
+                <option value="suspended">{{ __('Suspended') }}</option>
+                <option value="deactivated">{{ __('Deactivated') }}</option>
             </select>
             <select wire:model.live="subscriptionFilter" class="pk-input">
-                <option value="">All subscriptions</option>
-                <option value="active">Active</option>
-                <option value="expired">Expired</option>
-                <option value="pending_subscription">Pending</option>
+                <option value="">{{ __('All subscriptions') }}</option>
+                <option value="active">{{ __('Active') }}</option>
+                <option value="expired">{{ __('Expired') }}</option>
+                <option value="pending_subscription">{{ __('Pending') }}</option>
             </select>
             <select wire:model.live="joinedYearFilter" class="pk-input">
-                <option value="">All joined years</option>
+                <option value="">{{ __('All joined years') }}</option>
                 @foreach($joinedYears as $year => $total)
                     <option value="{{ $year }}">{{ $year }} ({{ $total }})</option>
                 @endforeach
             </select>
             <select wire:model.live="insuranceClaimFilter" class="pk-input">
-                <option value="">All insurance claims</option>
+                <option value="">{{ __('All insurance claims') }}</option>
                 @foreach(App\Models\Member::INSURANCE_STATUSES as $status)
-                    <option value="{{ $status }}">{{ ucwords(str_replace('_', ' ', $status)) }}</option>
+                    <option value="{{ $status }}">{{ __(ucwords(str_replace('_', ' ', $status))) }}</option>
                 @endforeach
             </select>
         </div>
@@ -571,32 +571,32 @@ new #[Layout('layouts.app')] class extends Component {
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-500"><button type="button" wire:click="sortBy('full_name')">Member {{ $this->sortIcon('full_name') }}</button></th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Membership ID</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">{{ __('Membership ID') }}</th>
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500"><button type="button" wire:click="sortBy('status')">Status {{ $this->sortIcon('status') }}</button></th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Subscription</th>
-                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">Insurance Claim</th>
-                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">Actions</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">{{ __('Subscription') }}</th>
+                        <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-slate-500">{{ __('Insurance Claim') }}</th>
+                        <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-slate-500">{{ __('Actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 bg-white">
                     @forelse($members as $member)
                         <tr class="hover:bg-slate-50/60">
                             <td class="px-5 py-4"><p class="font-semibold text-slate-800">{{ $member->full_name }}</p><p class="text-xs text-slate-500">{{ $member->email }}</p></td>
-                            <td class="px-4 py-4 font-mono text-xs font-semibold text-[#E31E24]">{{ $member->membership_id ?: '-' }}</td>
+                            <td class="px-4 py-4 font-mono text-xs font-semibold text-[#9a7300]">{{ $member->membership_id ?: '-' }}</td>
                             <td class="px-4 py-4 text-sm"><x-admin.status-badge :status="$member->status" /></td>
                             <td class="px-4 py-4 text-xs text-slate-600">
                                 <x-admin.status-badge :status="$member->subscription_state" />
-                                @if($member->subscription_ends_at)<div class="mt-1">Ends {{ $member->subscription_ends_at->format('d M Y') }}</div>@endif
+                                @if($member->subscription_ends_at)<div class="mt-1">{{ __('Ends') }} {{ $member->subscription_ends_at->format('d M Y') }}</div>@endif
                             </td>
-                            <td class="px-4 py-4 text-sm text-slate-600">{{ ucwords(str_replace('_', ' ', $member->insurance_claim_status)) }}</td>
+                            <td class="px-4 py-4 text-sm text-slate-600">{{ __(ucwords(str_replace('_', ' ', $member->insurance_claim_status))) }}</td>
                             <td class="px-4 py-4 text-right">
                                 @can('members.edit')
-                                <button type="button" wire:click="editMember({{ $member->id }})" class="pk-btn-secondary">Edit</button>
+                                <button type="button" wire:click="editMember({{ $member->id }})" class="pk-btn-secondary">{{ __('Edit') }}</button>
                                 @endcan
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6" class="px-5 py-10 text-center text-sm text-slate-500">No members found.</td></tr>
+                        <tr><td colspan="6" class="px-5 py-10 text-center text-sm text-slate-500">{{ __('No members found.') }}</td></tr>
                     @endforelse
                 </tbody>
             </table>
@@ -611,45 +611,45 @@ new #[Layout('layouts.app')] class extends Component {
         <div class="absolute inset-0 bg-slate-900/50" @click="open = false"></div>
         <div class="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white shadow-xl">
             <div class="flex items-center justify-between border-b px-6 py-4">
-                <h2 class="text-lg font-semibold text-slate-800">{{ $memberId ? 'Edit Member' : 'New Member' }}</h2>
+                <h2 class="text-lg font-semibold text-slate-800">{{ __($memberId ? 'Edit Member' : 'New Member') }}</h2>
                 <button type="button" @click="open = false" class="text-slate-400">&times;</button>
             </div>
 
             <div class="flex gap-2 border-b px-6">
-                <button type="button" @click="tab = 'profile'" class="border-b-2 px-3 py-3 text-sm" :class="tab === 'profile' ? 'border-[#E31E24] text-[#E31E24]' : 'border-transparent text-slate-500'">Profile</button>
+                <button type="button" @click="tab = 'profile'" class="border-b-2 px-3 py-3 text-sm" :class="tab === 'profile' ? 'border-[#9a7300] text-[#9a7300]' : 'border-transparent text-slate-500'">{{ __('Profile') }}</button>
                 @if($memberId)
-                <button type="button" @click="tab = 'subscription'" class="border-b-2 px-3 py-3 text-sm" :class="tab === 'subscription' ? 'border-[#E31E24] text-[#E31E24]' : 'border-transparent text-slate-500'">Subscription</button>
+                <button type="button" @click="tab = 'subscription'" class="border-b-2 px-3 py-3 text-sm" :class="tab === 'subscription' ? 'border-[#9a7300] text-[#9a7300]' : 'border-transparent text-slate-500'">{{ __('Subscription') }}</button>
                 @endif
             </div>
 
             <div x-show="tab === 'profile'" class="space-y-4 p-6">
                 <div class="grid gap-4 md:grid-cols-2">
-                    <div><label class="pk-label">Full Name *</label><input type="text" wire:model="full_name" class="pk-input">@error('full_name')<p class="text-xs text-rose-600">{{ $message }}</p>@enderror</div>
-                    <div><label class="pk-label">Display Name</label><input type="text" wire:model="display_name" class="pk-input"></div>
-                    <div><label class="pk-label">Email *</label><input type="email" wire:model="email" class="pk-input">@error('email')<p class="text-xs text-rose-600">{{ $message }}</p>@enderror</div>
-                    <div><label class="pk-label">Phone</label><input type="text" wire:model="phoneLocal" class="pk-input"></div>
-                    <div><label class="pk-label">IC Number</label><input type="text" wire:model="ic_number" class="pk-input"></div>
-                    <div><label class="pk-label">Insurance Claim</label><select wire:model="insurance_claim_status" class="pk-input">@foreach(App\Models\Member::INSURANCE_STATUSES as $status)<option value="{{ $status }}">{{ ucwords(str_replace('_', ' ', $status)) }}</option>@endforeach</select></div>
+                    <div><label class="pk-label">{{ __('Full Name *') }}</label><input type="text" wire:model="full_name" class="pk-input">@error('full_name')<p class="text-xs text-rose-600">{{ $message }}</p>@enderror</div>
+                    <div><label class="pk-label">{{ __('Display Name') }}</label><input type="text" wire:model="display_name" class="pk-input"></div>
+                    <div><label class="pk-label">{{ __('Email *') }}</label><input type="email" wire:model="email" class="pk-input">@error('email')<p class="text-xs text-rose-600">{{ $message }}</p>@enderror</div>
+                    <div><label class="pk-label">{{ __('Phone') }}</label><input type="text" wire:model="phoneLocal" class="pk-input"></div>
+                    <div><label class="pk-label">{{ __('IC Number') }}</label><input type="text" wire:model="ic_number" class="pk-input"></div>
+                    <div><label class="pk-label">{{ __('Insurance Claim') }}</label><select wire:model="insurance_claim_status" class="pk-input">@foreach(App\Models\Member::INSURANCE_STATUSES as $status)<option value="{{ $status }}">{{ __(ucwords(str_replace('_', ' ', $status))) }}</option>@endforeach</select></div>
                 </div>
-                <button type="button" wire:click="saveMember" class="pk-btn-primary w-full">Save Member</button>
-                @if($lastCreatedPassword)<div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">Temporary password: <strong>{{ $lastCreatedPassword }}</strong></div>@endif
-                @if($lastResetTempPassword)<div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">Reset password: <strong>{{ $lastResetTempPassword }}</strong></div>@endif
+                <button type="button" wire:click="saveMember" class="pk-btn-primary w-full">{{ __('Save Member') }}</button>
+                @if($lastCreatedPassword)<div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">{{ __('Temporary password:') }} <strong>{{ $lastCreatedPassword }}</strong></div>@endif
+                @if($lastResetTempPassword)<div class="rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">{{ __('Reset password:') }} <strong>{{ $lastResetTempPassword }}</strong></div>@endif
             </div>
 
             @if($memberId)
             <div x-show="tab === 'subscription'" class="space-y-4 p-6">
-                <div><label class="pk-label">Subscription Plan</label><select wire:model="selectedPlanId" class="pk-input"><option value="">Select a plan</option>@foreach($plans as $plan)<option value="{{ $plan->id }}">{{ $plan->name }}</option>@endforeach</select></div>
-                <div><label class="pk-label">Notes</label><input type="text" wire:model="subscriptionNotes" class="pk-input"></div>
-                <button type="button" wire:click="assignSubscription({{ $memberId }})" class="pk-btn-primary w-full">Assign Plan</button>
+                <div><label class="pk-label">{{ __('Subscription Plan') }}</label><select wire:model="selectedPlanId" class="pk-input"><option value="">{{ __('Select a plan') }}</option>@foreach($plans as $plan)<option value="{{ $plan->id }}">{{ $plan->name }}</option>@endforeach</select></div>
+                <div><label class="pk-label">{{ __('Notes') }}</label><input type="text" wire:model="subscriptionNotes" class="pk-input"></div>
+                <button type="button" wire:click="assignSubscription({{ $memberId }})" class="pk-btn-primary w-full">{{ __('Assign Plan') }}</button>
 
-                <div class="grid gap-3 md:grid-cols-2"><input type="number" wire:model="extensionDays" min="1" class="pk-input"><button type="button" wire:click="extendSubscription({{ $memberId }})" class="pk-btn-secondary">Extend Subscription</button></div>
-                <button type="button" wire:click="cancelSubscription({{ $memberId }})" class="pk-btn-secondary w-full">Cancel Active Subscription</button>
+                <div class="grid gap-3 md:grid-cols-2"><input type="number" wire:model="extensionDays" min="1" class="pk-input"><button type="button" wire:click="extendSubscription({{ $memberId }})" class="pk-btn-secondary">{{ __('Extend Subscription') }}</button></div>
+                <button type="button" wire:click="cancelSubscription({{ $memberId }})" class="pk-btn-secondary w-full">{{ __('Cancel Active Subscription') }}</button>
 
                 <div class="space-y-2">
                     @forelse($memberSubscriptionHistory as $subscription)
-                        <div class="rounded-lg border p-3 text-sm"><strong>{{ $subscription->plan?->name ?: 'Plan' }}</strong><div class="text-xs text-slate-500">{{ $subscription->status }} · {{ optional($subscription->ends_at)->format('d M Y') }}</div></div>
+                        <div class="rounded-lg border p-3 text-sm"><strong>{{ $subscription->plan?->name ?: __('Plan') }}</strong><div class="text-xs text-slate-500">{{ __(ucwords(str_replace('_', ' ', $subscription->status))) }} · {{ optional($subscription->ends_at)->format('d M Y') }}</div></div>
                     @empty
-                        <p class="text-sm text-slate-500">No subscription history.</p>
+                        <p class="text-sm text-slate-500">{{ __('No subscription history.') }}</p>
                     @endforelse
                 </div>
             </div>

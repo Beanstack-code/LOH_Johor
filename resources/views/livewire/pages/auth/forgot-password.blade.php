@@ -78,7 +78,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         <!-- Back to Login Link -->
         <div class="text-center">
-            <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center text-sm font-medium text-[#566a7f] hover:text-[#ed1c24] transition">
+            <a href="{{ route('login') }}" wire:navigate class="inline-flex items-center text-sm font-medium text-[#566a7f] hover:text-[#9a7300] transition">
                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>

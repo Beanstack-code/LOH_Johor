@@ -2,7 +2,7 @@
 
 <div>
     @if ($label)
-        <label class="pk-label">{{ $label }}</label>
+        <label class="pk-label">{{ __($label) }}</label>
     @endif
 
     {{ $slot }}

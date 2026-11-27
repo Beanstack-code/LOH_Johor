@@ -238,7 +238,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type === 'error' ? 'error' : 'success';
     }
 }; ?>
@@ -246,11 +246,11 @@ new #[Layout('layouts.app')] class extends Component {
 <x-slot name="header">
     <div class="flex items-center justify-between gap-4">
         <div>
-            <h1 class="pk-page-title">Fraud Alert Indicator</h1>
-            <p class="pk-subtitle">Monitor anomaly signals, manage fraud rules, and triage suspicious activity quickly.</p>
+            <h1 class="pk-page-title">{{ __('Fraud Alert Indicator') }}</h1>
+            <p class="pk-subtitle">{{ __('Monitor anomaly signals, manage fraud rules, and triage suspicious activity quickly.') }}</p>
         </div>
         @can('fraud_alerts.edit')
-        <button type="button" wire:click="runDetection" class="pk-btn-primary">Run Detection</button>
+        <button type="button" wire:click="runDetection" class="pk-btn-primary">{{ __('Run Detection') }}</button>
         @endcan
     </div>
 </x-slot>
@@ -282,48 +282,48 @@ new #[Layout('layouts.app')] class extends Component {
 
     <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Open</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('Open') }}</p>
             <p class="mt-2 text-xl font-semibold text-slate-800">{{ $kpis['open'] }}</p>
         </article>
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Acknowledged</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('Acknowledged') }}</p>
             <p class="mt-2 text-xl font-semibold text-slate-800">{{ $kpis['acknowledged'] }}</p>
         </article>
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Resolved</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('Resolved') }}</p>
             <p class="mt-2 text-xl font-semibold text-slate-800">{{ $kpis['resolved'] }}</p>
         </article>
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">False Positive</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('False Positive') }}</p>
             <p class="mt-2 text-xl font-semibold text-slate-800">{{ $kpis['false_positive'] }}</p>
         </article>
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">Critical Active</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('Critical Active') }}</p>
             <p class="mt-2 text-xl font-semibold text-rose-700">{{ $kpis['critical'] }}</p>
         </article>
         <article class="pk-card p-4">
-            <p class="text-xs uppercase tracking-wide text-slate-500">High Active</p>
+            <p class="text-xs uppercase tracking-wide text-slate-500">{{ __('High Active') }}</p>
             <p class="mt-2 text-xl font-semibold text-amber-700">{{ $kpis['high'] }}</p>
         </article>
     </section>
 
     <section class="pk-filter-bar">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search rule or entity..." class="pk-input w-full sm:max-w-sm">
+        <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search rule or entity...') }}" class="pk-input w-full sm:max-w-sm">
         <select wire:model.live="severityFilter" class="pk-input w-full sm:max-w-xs">
-            <option value="">All Severities</option>
-            <option value="critical">Critical</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
+            <option value="">{{ __('All Severities') }}</option>
+            <option value="critical">{{ __('Critical') }}</option>
+            <option value="high">{{ __('High') }}</option>
+            <option value="medium">{{ __('Medium') }}</option>
         </select>
         <select wire:model.live="statusFilter" class="pk-input w-full sm:max-w-xs">
-            <option value="">All Statuses</option>
-            <option value="open">Open</option>
-            <option value="acknowledged">Acknowledged</option>
-            <option value="resolved">Resolved</option>
-            <option value="false_positive">False Positive</option>
+            <option value="">{{ __('All Statuses') }}</option>
+            <option value="open">{{ __('Open') }}</option>
+            <option value="acknowledged">{{ __('Acknowledged') }}</option>
+            <option value="resolved">{{ __('Resolved') }}</option>
+            <option value="false_positive">{{ __('False Positive') }}</option>
         </select>
         <select wire:model.live="ruleFilter" class="pk-input w-full sm:max-w-sm">
-            <option value="">All Rules</option>
+            <option value="">{{ __('All Rules') }}</option>
             @foreach($rules as $rule)
                 <option value="{{ $rule->id }}">{{ $rule->name }}</option>
             @endforeach
@@ -344,29 +344,29 @@ new #[Layout('layouts.app')] class extends Component {
                             <x-admin.status-badge :status="$alert->status" />
                         </div>
                         <dl class="mt-3 space-y-1 text-xs text-slate-600">
-                            <div class="flex justify-between gap-3"><dt>Alert ID</dt><dd class="font-mono font-semibold text-slate-700">#{{ $alert->id }}</dd></div>
-                            <div class="flex justify-between gap-3"><dt>Type</dt><dd class="font-semibold text-slate-700">{{ $this->entityTypeLabel($alert) }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Alert ID') }}</dt><dd class="font-mono font-semibold text-slate-700">#{{ $alert->id }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Type') }}</dt><dd class="font-semibold text-slate-700">{{ __($this->entityTypeLabel($alert)) }}</dd></div>
                             <div class="flex justify-between gap-3">
-                                <dt>Severity</dt>
-                                <dd><span class="{{ $this->severityBadgeClass($alert->severity) }}">{{ Str::title($alert->severity) }}</span></dd>
+                                <dt>{{ __('Severity') }}</dt>
+                                <dd><span class="{{ $this->severityBadgeClass($alert->severity) }}">{{ __(Str::title($alert->severity)) }}</span></dd>
                             </div>
-                            <div class="flex justify-between gap-3"><dt>Risk score</dt><dd class="font-semibold text-slate-800">{{ $alert->risk_score }}</dd></div>
-                            <div class="flex justify-between gap-3"><dt>Triggered</dt><dd>{{ optional($alert->triggered_at)->format('d M Y H:i') }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Risk score') }}</dt><dd class="font-semibold text-slate-800">{{ $alert->risk_score }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Triggered') }}</dt><dd>{{ optional($alert->triggered_at)->format('d M Y H:i') }}</dd></div>
                             @if($alert->resolved_at)
-                                <div class="flex justify-between gap-3"><dt>Resolved</dt><dd>{{ optional($alert->resolved_at)->format('d M Y H:i') }}</dd></div>
+                                <div class="flex justify-between gap-3"><dt>{{ __('Resolved') }}</dt><dd>{{ optional($alert->resolved_at)->format('d M Y H:i') }}</dd></div>
                             @endif
                         </dl>
                         <details class="mt-3 rounded-xl border border-slate-200 bg-slate-50/60">
-                            <summary class="cursor-pointer select-none px-3 py-2 text-xs font-semibold text-slate-700">Full alert details</summary>
+                            <summary class="cursor-pointer select-none px-3 py-2 text-xs font-semibold text-slate-700">{{ __('Full alert details') }}</summary>
                             <div class="border-t border-slate-200 px-3 py-3">
                                 @include('livewire.pages.admin.partials.fraud-alert-detail', ['alert' => $alert])
                             </div>
                         </details>
                         @can('fraud_alerts.resolve')
                         <div class="mt-3 grid grid-cols-3 gap-2">
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="acknowledgeAlert({{ $alert->id }})">Ack</button>
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="resolveAlert({{ $alert->id }})">Resolve</button>
-                            <button class="pk-btn-secondary px-2 py-2 text-xs text-rose-600" wire:click="markFalsePositive({{ $alert->id }})">False+</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="acknowledgeAlert({{ $alert->id }})">{{ __('Ack') }}</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="resolveAlert({{ $alert->id }})">{{ __('Resolve') }}</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs text-rose-600" wire:click="markFalsePositive({{ $alert->id }})">{{ __('False+') }}</button>
                         </div>
                         @endcan
                     </article>
@@ -378,22 +378,22 @@ new #[Layout('layouts.app')] class extends Component {
                     <table class="pk-table w-full">
                         <thead>
                             <tr>
-                                <th class="whitespace-nowrap">Rule</th>
-                                <th class="whitespace-nowrap">Type</th>
-                                <th class="whitespace-nowrap">Entity</th>
+                                <th class="whitespace-nowrap">{{ __('Rule') }}</th>
+                                <th class="whitespace-nowrap">{{ __('Type') }}</th>
+                                <th class="whitespace-nowrap">{{ __('Entity') }}</th>
                                 <th class="whitespace-nowrap">
-                                    <button type="button" wire:click="sortBy('severity')" class="inline-flex items-center gap-1">Severity <span>{{ $this->sortIcon('severity') }}</span></button>
+                                    <button type="button" wire:click="sortBy('severity')" class="inline-flex items-center gap-1">{{ __('Severity') }} <span>{{ $this->sortIcon('severity') }}</span></button>
                                 </th>
                                 <th class="whitespace-nowrap">
-                                    <button type="button" wire:click="sortBy('risk_score')" class="inline-flex items-center gap-1">Risk <span>{{ $this->sortIcon('risk_score') }}</span></button>
+                                    <button type="button" wire:click="sortBy('risk_score')" class="inline-flex items-center gap-1">{{ __('Risk') }} <span>{{ $this->sortIcon('risk_score') }}</span></button>
                                 </th>
                                 <th class="whitespace-nowrap">
-                                    <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">Status <span>{{ $this->sortIcon('status') }}</span></button>
+                                    <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">{{ __('Status') }} <span>{{ $this->sortIcon('status') }}</span></button>
                                 </th>
                                 <th class="whitespace-nowrap">
-                                    <button type="button" wire:click="sortBy('triggered_at')" class="inline-flex items-center gap-1">Triggered <span>{{ $this->sortIcon('triggered_at') }}</span></button>
+                                    <button type="button" wire:click="sortBy('triggered_at')" class="inline-flex items-center gap-1">{{ __('Triggered') }} <span>{{ $this->sortIcon('triggered_at') }}</span></button>
                                 </th>
-                                <th class="whitespace-nowrap">Actions</th>
+                                <th class="whitespace-nowrap">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -405,12 +405,12 @@ new #[Layout('layouts.app')] class extends Component {
                                             <p class="mt-0.5 font-mono text-[11px] text-slate-500">{{ $alert->rule?->code ?? '—' }}</p>
                                         </div>
                                     </td>
-                                    <td class="whitespace-nowrap font-semibold text-slate-700">{{ $this->entityTypeLabel($alert) }}</td>
+                                    <td class="whitespace-nowrap font-semibold text-slate-700">{{ __($this->entityTypeLabel($alert)) }}</td>
                                     <td>
                                         <div class="max-w-[12rem] whitespace-normal text-sm text-slate-700">{{ $this->entityDisplay($alert) }}</div>
                                         <p class="mt-0.5 font-mono text-[10px] text-slate-400">#{{ $alert->entity_id ?? '—' }}</p>
                                     </td>
-                                    <td class="whitespace-nowrap"><span class="{{ $this->severityBadgeClass($alert->severity) }}">{{ Str::title($alert->severity) }}</span></td>
+                                    <td class="whitespace-nowrap"><span class="{{ $this->severityBadgeClass($alert->severity) }}">{{ __(Str::title($alert->severity)) }}</span></td>
                                     <td class="whitespace-nowrap font-semibold text-slate-800">{{ $alert->risk_score }}</td>
                                     <td class="whitespace-nowrap"><x-admin.status-badge :status="$alert->status" /></td>
                                     <td class="whitespace-nowrap">{{ optional($alert->triggered_at)->format('d M Y H:i') }}</td>
@@ -421,14 +421,14 @@ new #[Layout('layouts.app')] class extends Component {
                                                 class="pk-btn-secondary px-3 py-1.5 text-xs"
                                                 @click="openAlertId = openAlertId === {{ $alert->id }} ? null : {{ $alert->id }}"
                                             >
-                                                <span x-show="openAlertId !== {{ $alert->id }}">Show details</span>
-                                                <span x-show="openAlertId === {{ $alert->id }}">Hide details</span>
+                                                <span x-show="openAlertId !== {{ $alert->id }}">{{ __('Show details') }}</span>
+                                                <span x-show="openAlertId === {{ $alert->id }}">{{ __('Hide details') }}</span>
                                             </button>
                                             @can('fraud_alerts.resolve')
                                             <div class="flex flex-wrap items-center gap-2">
-                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="acknowledgeAlert({{ $alert->id }})">Acknowledge</button>
-                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="resolveAlert({{ $alert->id }})">Resolve</button>
-                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="markFalsePositive({{ $alert->id }})">False Positive</button>
+                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="acknowledgeAlert({{ $alert->id }})">{{ __('Acknowledge') }}</button>
+                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="resolveAlert({{ $alert->id }})">{{ __('Resolve') }}</button>
+                                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="markFalsePositive({{ $alert->id }})">{{ __('False Positive') }}</button>
                                             </div>
                                             @endcan
                                         </div>
@@ -450,7 +450,7 @@ new #[Layout('layouts.app')] class extends Component {
 
         <aside class="pk-card p-5">
             <div class="flex items-center justify-between">
-                <h2 class="text-base font-semibold text-slate-800">Fraud Rules</h2>
+                <h2 class="text-base font-semibold text-slate-800">{{ __('Fraud Rules') }}</h2>
                 <span class="text-xs text-slate-500">{{ $rules->count() }} total</span>
             </div>
             <div class="mt-4 max-h-[calc(100vh-12rem)] space-y-3 overflow-y-auto pr-1">
@@ -467,36 +467,36 @@ new #[Layout('layouts.app')] class extends Component {
                             <div class="flex shrink-0 flex-col items-end gap-1.5">
                                 <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold {{ $this->severityBadgeClass($rule->severity) }}">{{ Str::title($rule->severity) }}</span>
                                 @if($rule->is_enabled)
-                                    <span class="inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-800 ring-1 ring-emerald-200">Enabled</span>
+                                    <span class="inline-flex rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-emerald-800 ring-1 ring-emerald-200">{{ __('Enabled') }}</span>
                                 @else
-                                    <span class="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">Disabled</span>
+                                    <span class="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-600 ring-1 ring-slate-200">{{ __('Disabled') }}</span>
                                 @endif
                             </div>
                         </div>
                         <dl class="mt-3 space-y-2 border-t border-slate-100 pt-3 text-xs text-slate-600">
                             <div class="flex justify-between gap-3">
-                                <dt class="text-slate-500">Rule ID</dt>
+                                <dt class="text-slate-500">{{ __('Rule ID') }}</dt>
                                 <dd class="font-mono font-semibold text-slate-800">#{{ $rule->id }}</dd>
                             </div>
                             <div class="flex justify-between gap-3">
-                                <dt class="text-slate-500">Evaluation window</dt>
+                                <dt class="text-slate-500">{{ __('Evaluation window') }}</dt>
                                 <dd class="font-medium text-slate-800">{{ $rule->window_minutes }} min</dd>
                             </div>
                             <div class="flex justify-between gap-3">
-                                <dt class="text-slate-500">Sort order</dt>
+                                <dt class="text-slate-500">{{ __('Sort order') }}</dt>
                                 <dd class="font-medium text-slate-800">{{ $rule->sort_order }}</dd>
                             </div>
                             <div class="flex justify-between gap-3">
-                                <dt class="text-slate-500">Last triggered</dt>
+                                <dt class="text-slate-500">{{ __('Last triggered') }}</dt>
                                 <dd class="text-right font-medium text-slate-800">{{ optional($rule->last_triggered_at)->format('d M Y H:i:s') ?? 'Never' }}</dd>
                             </div>
                             <div class="flex justify-between gap-3">
-                                <dt class="text-slate-500">Record timestamps</dt>
+                                <dt class="text-slate-500">{{ __('Record timestamps') }}</dt>
                                 <dd class="text-right text-slate-700">{{ optional($rule->created_at)->format('d M Y H:i') ?? '—' }} → {{ optional($rule->updated_at)->format('d M Y H:i') ?? '—' }}</dd>
                             </div>
                         </dl>
                         <div class="mt-3">
-                            <p class="text-xs font-semibold text-slate-500">Thresholds</p>
+                            <p class="text-xs font-semibold text-slate-500">{{ __('Thresholds') }}</p>
                             @if($rule->thresholds_json && count($rule->thresholds_json) > 0)
                                 <dl class="mt-1.5 space-y-2 rounded-lg border border-slate-100 bg-slate-50/80 p-2.5">
                                     @foreach($rule->thresholds_json as $key => $value)
@@ -526,15 +526,15 @@ new #[Layout('layouts.app')] class extends Component {
                                     @endforeach
                                 </dl>
                             @else
-                                <p class="mt-1 text-xs italic text-slate-400">No threshold JSON configured.</p>
+                                <p class="mt-1 text-xs italic text-slate-400">{{ __('No threshold JSON configured.') }}</p>
                             @endif
                         </div>
                         @can('fraud_alerts.edit')
                         <div class="mt-3 border-t border-slate-100 pt-3">
                             @if($rule->is_enabled)
-                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="toggleRule({{ $rule->id }})">Disable</button>
+                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="toggleRule({{ $rule->id }})">{{ __('Disable') }}</button>
                             @else
-                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-emerald-600" wire:click="toggleRule({{ $rule->id }})">Enable</button>
+                                <button type="button" class="pk-btn-secondary px-3 py-1.5 text-xs text-emerald-600" wire:click="toggleRule({{ $rule->id }})">{{ __('Enable') }}</button>
                             @endif
                         </div>
                         @endcan

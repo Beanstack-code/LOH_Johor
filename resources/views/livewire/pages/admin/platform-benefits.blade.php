@@ -114,15 +114,15 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type === 'error' ? 'error' : 'success';
     }
 }; ?>
 
 <x-slot name="header">
     <div>
-        <h1 class="pk-page-title">Platform Benefits</h1>
-        <p class="pk-subtitle">Manage benefit messaging shown to both apps or specific audience segments.</p>
+        <h1 class="pk-page-title">{{ __('Platform Benefits') }}</h1>
+        <p class="pk-subtitle">{{ __('Manage benefit messaging shown to both apps or specific audience segments.') }}</p>
     </div>
 </x-slot>
 
@@ -149,7 +149,7 @@ new #[Layout('layouts.app')] class extends Component {
                     class="text-xs font-semibold"
                     :style="type === 'error' ? 'color:#be123c;' : 'color:#15803d;'"
                     @click="message = ''"
-                >Dismiss</button>
+                >{{ __('Dismiss') }}</button>
             </div>
         </div>
     </div>
@@ -192,53 +192,53 @@ new #[Layout('layouts.app')] class extends Component {
             </div>
 
             <div class="flex items-center justify-between">
-                <h2 class="text-base font-semibold text-slate-800">{{ $benefitId ? 'Edit Benefit' : 'Create Benefit' }}</h2>
+                <h2 class="text-base font-semibold text-slate-800">{{ __($benefitId ? 'Edit Benefit' : 'Create Benefit') }}</h2>
                 @if($benefitId && auth()->user()->can('platform-benefits.create'))
-                    <button type="button" class="pk-btn-primary shrink-0" wire:click="startCreate">Create New</button>
+                    <button type="button" class="pk-btn-primary shrink-0" wire:click="startCreate">{{ __('Create New') }}</button>
                 @endif
             </div>
 
             <form wire:submit="saveBenefit" class="mt-4 space-y-3">
                 <x-admin.form.group label="Title *">
                     <div x-show="activeLang === 'en'" x-cloak>
-                        <input class="{{ $errors->has('title') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title" placeholder="e.g. Easy QR Rewards">
+                        <input class="{{ $errors->has('title') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title" placeholder="{{ __('e.g. Easy QR Rewards') }}">
                         @error('title')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'ms'" x-cloak>
-                        <input class="{{ $errors->has('title_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_ms" placeholder="Malay title">
+                        <input class="{{ $errors->has('title_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_ms" placeholder="{{ __('Malay title') }}">
                         @error('title_ms')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'zh'" x-cloak>
-                        <input class="{{ $errors->has('title_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_zh" placeholder="Chinese title">
+                        <input class="{{ $errors->has('title_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="title_zh" placeholder="{{ __('Chinese title') }}">
                         @error('title_zh')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                 </x-admin.form.group>
 
                 <x-admin.form.group label="Audience *">
                     <select class="{{ $errors->has('audience') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="audience">
-                        <option value="both">Both</option>
-                        <option value="member">Member Only</option>
-                        <option value="merchant">Merchant Only</option>
+                        <option value="both">{{ __('Both') }}</option>
+                        <option value="member">{{ __('Member Only') }}</option>
+                        <option value="merchant">{{ __('Merchant Only') }}</option>
                     </select>
                     @error('audience')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                 </x-admin.form.group>
 
                 <x-admin.form.group label="Content *">
                     <div x-show="activeLang === 'en'" x-cloak>
-                        <textarea class="{{ $errors->has('content') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content" rows="6" placeholder="Describe the benefit..."></textarea>
+                        <textarea class="{{ $errors->has('content') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content" rows="6" placeholder="{{ __('Describe the benefit...') }}"></textarea>
                         @error('content')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'ms'" x-cloak>
-                        <textarea class="{{ $errors->has('content_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content_ms" rows="6" placeholder="Malay content"></textarea>
+                        <textarea class="{{ $errors->has('content_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content_ms" rows="6" placeholder="{{ __('Malay content') }}"></textarea>
                         @error('content_ms')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'zh'" x-cloak>
-                        <textarea class="{{ $errors->has('content_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content_zh" rows="6" placeholder="Chinese content"></textarea>
+                        <textarea class="{{ $errors->has('content_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content_zh" rows="6" placeholder="{{ __('Chinese content') }}"></textarea>
                         @error('content_zh')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                 </x-admin.form.group>
 
-                <p class="mt-0 -mb-2 text-xs text-slate-500">Switch tabs to fill EN/MS/ZH. If MS/ZH is empty, the app will fall back to English.</p>
+                <p class="mt-0 -mb-2 text-xs text-slate-500">{{ __('Switch tabs to fill EN/MS/ZH. If MS/ZH is empty, the app will fall back to English.') }}</p>
 
                 <label class="flex items-center gap-2 text-sm text-slate-700">
                     <input type="checkbox" wire:model="is_active" class="rounded border-slate-300">
@@ -247,11 +247,11 @@ new #[Layout('layouts.app')] class extends Component {
 
                 @if($benefitId)
                     @can('platform-benefits.edit')
-                    <button class="pk-btn-primary w-full">Update Benefit</button>
+                    <button class="pk-btn-primary w-full">{{ __('Update Benefit') }}</button>
                     @endcan
                 @else
                     @can('platform-benefits.create')
-                    <button class="pk-btn-primary w-full">Save Benefit</button>
+                    <button class="pk-btn-primary w-full">{{ __('Save Benefit') }}</button>
                     @endcan
                 @endif
             </form>
@@ -262,10 +262,10 @@ new #[Layout('layouts.app')] class extends Component {
                 <table class="pk-table w-full">
                     <thead>
                         <tr>
-                            <th>Title</th>
-                            <th class="whitespace-nowrap">Audience</th>
-                            <th class="whitespace-nowrap">Status</th>
-                            <th class="whitespace-nowrap text-right">Actions</th>
+                            <th>{{ __('Title') }}</th>
+                            <th class="whitespace-nowrap">{{ __('Audience') }}</th>
+                            <th class="whitespace-nowrap">{{ __('Status') }}</th>
+                            <th class="whitespace-nowrap text-right">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -278,26 +278,26 @@ new #[Layout('layouts.app')] class extends Component {
                                 <td class="whitespace-nowrap">{{ \Illuminate\Support\Str::title($benefit->audience) }}</td>
                                 <td class="whitespace-nowrap">
                                     @if($benefit->is_active)
-                                        <span class="pk-badge-success">Active</span>
+                                        <span class="pk-badge-success">{{ __('Active') }}</span>
                                     @else
-                                        <span class="pk-badge-danger">Inactive</span>
+                                        <span class="pk-badge-danger">{{ __('Inactive') }}</span>
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap text-right">
                                     <div class="inline-flex items-center gap-2">
                                         @can('platform-benefits.edit')
-                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="editBenefit({{ $benefit->id }})">Edit</button>
-                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="toggleActive({{ $benefit->id }})">{{ $benefit->is_active ? 'Disable' : 'Enable' }}</button>
+                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="editBenefit({{ $benefit->id }})">{{ __('Edit') }}</button>
+                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs" wire:click="toggleActive({{ $benefit->id }})">{{ __($benefit->is_active ? 'Disable' : 'Enable') }}</button>
                                         @endcan
                                         @can('platform-benefits.delete')
-                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="deleteBenefit({{ $benefit->id }})">Delete</button>
+                                        <button class="pk-btn-secondary px-3 py-1.5 text-xs text-rose-600" wire:click="deleteBenefit({{ $benefit->id }})">{{ __('Delete') }}</button>
                                         @endcan
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="py-6 text-center text-sm text-slate-500">No platform benefits yet.</td>
+                                <td colspan="4" class="py-6 text-center text-sm text-slate-500">{{ __('No platform benefits yet.') }}</td>
                             </tr>
                         @endforelse
                     </tbody>

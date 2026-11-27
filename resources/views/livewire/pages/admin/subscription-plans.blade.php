@@ -440,7 +440,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type === 'error' ? 'error' : 'success';
     }
 }; ?>
@@ -448,8 +448,8 @@ new #[Layout('layouts.app')] class extends Component {
 <x-slot name="header">
     <div class="flex items-start justify-between gap-3">
         <div>
-            <h1 class="pk-page-title">Subscription Plan Management</h1>
-            <p class="pk-subtitle">Create flexible plans for frontend display and backend subscription assignment.</p>
+            <h1 class="pk-page-title">{{ __('Subscription Plan Management') }}</h1>
+            <p class="pk-subtitle">{{ __('Create flexible plans for frontend display and backend subscription assignment.') }}</p>
         </div>
         @can('subscriptions.edit')
             <button
@@ -496,24 +496,24 @@ new #[Layout('layouts.app')] class extends Component {
     @can('subscriptions.edit')
     @if($showBillingConfig)
     <section class="pk-card p-5" wire:key="billing-config-section">
-        <h2 class="text-base font-semibold text-slate-800">Member subscription admin fee</h2>
+        <h2 class="text-base font-semibold text-slate-800">{{ __('Member subscription admin fee') }}</h2>
         <p class="mt-1 text-xs text-slate-500">
             One-time fee for first-time subscriptions and for re-subscriptions after continuous inactivity (subscription lapse or suspension) for at least the grace period. Values are stored in the database (app settings), not in <code class="rounded bg-slate-100 px-1 text-[11px]">.env</code>.
         </p>
         <form wire:submit="saveBillingSettings" class="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
-                <label class="block text-xs font-semibold text-slate-700">Admin fee (RM)</label>
+                <label class="block text-xs font-semibold text-slate-700">{{ __('Admin fee (RM)') }}</label>
                 <input type="number" min="0" step="0.01" wire:model="billingAdminFee" class="pk-input mt-1 w-full @error('billingAdminFee') border-rose-400 ring-1 ring-rose-200 @enderror">
                 @error('billingAdminFee')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
             </div>
             <div>
-                <label class="block text-xs font-semibold text-slate-700">Grace period (days)</label>
+                <label class="block text-xs font-semibold text-slate-700">{{ __('Grace period (days)') }}</label>
                 <input type="number" min="0" max="3650" step="1" wire:model="billingGraceDays" class="pk-input mt-1 w-full @error('billingGraceDays') border-rose-400 ring-1 ring-rose-200 @enderror">
                 @error('billingGraceDays')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
-                    <p class="mt-1 text-[11px] text-slate-500">After this many days of ended eligibility, the admin fee applies again.</p>
+                    <p class="mt-1 text-[11px] text-slate-500">{{ __('After this many days of ended eligibility, the admin fee applies again.') }}</p>
             </div>
             <div class="sm:col-span-2">
-                <button type="submit" class="pk-btn-primary">Save billing settings</button>
+                <button type="submit" class="pk-btn-primary">{{ __('Save billing settings') }}</button>
             </div>
         </form>
     </section>
@@ -521,23 +521,23 @@ new #[Layout('layouts.app')] class extends Component {
     @endcan
 
     <section class="pk-filter-bar">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by plan name..." class="pk-input pk-subscription-filter-field">
+        <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by plan name...') }}" class="pk-input pk-subscription-filter-field">
         <select wire:model.live="statusFilter" class="pk-input pk-subscription-filter-field">
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
+            <option value="">{{ __('All Status') }}</option>
+            <option value="active">{{ __('Active') }}</option>
+            <option value="inactive">{{ __('Inactive') }}</option>
         </select>
         <select wire:model.live="audienceFilter" class="pk-input pk-subscription-filter-field">
-            <option value="">All Audiences</option>
-            <option value="member">Member</option>
-            <option value="merchant">Merchant</option>
-            <option value="both">Both</option>
+            <option value="">{{ __('All Audiences') }}</option>
+            <option value="member">{{ __('Member') }}</option>
+            <option value="merchant">{{ __('Merchant') }}</option>
+            <option value="both">{{ __('Both') }}</option>
         </select>
         <select wire:model.live="durationFilter" class="pk-input pk-subscription-filter-field">
-            <option value="">All Durations</option>
-            <option value="day">Day(s)</option>
-            <option value="month">Month(s)</option>
-            <option value="year">Year(s)</option>
+            <option value="">{{ __('All Durations') }}</option>
+            <option value="day">{{ __('Day(s)') }}</option>
+            <option value="month">{{ __('Month(s)') }}</option>
+            <option value="year">{{ __('Year(s)') }}</option>
         </select>
     </section>
 
@@ -592,7 +592,7 @@ new #[Layout('layouts.app')] class extends Component {
             </div>
 
             <div class="flex items-center justify-between gap-3">
-                <h2 class="text-base font-semibold text-slate-800">{{ $planId ? 'Edit Subscription Plan' : 'Create Subscription Plan' }}</h2>
+                <h2 class="text-base font-semibold text-slate-800">{{ __($planId ? 'Edit Subscription Plan' : 'Create Subscription Plan') }}</h2>
                 <div class="flex items-center gap-2">
                     @if($planId)
                         @can('subscriptions.create')
@@ -631,31 +631,31 @@ new #[Layout('layouts.app')] class extends Component {
                             return $carry;
                         }, []);
                     @endphp
-                    Please fill all required fields. Missing: {{ implode(', ', array_keys($missingLanguages)) }}.
+                    {{ __('Please fill all required fields. Missing:') }} {{ implode(', ', array_keys($missingLanguages)) }}.
                 </div>
             @endif
             <form wire:submit="savePlan" class="mt-4 space-y-3">
                 <x-admin.form.group label="Plan Name *">
                     <div x-show="activeLang === 'en'" x-cloak>
-                        <input class="{{ $errors->has('name') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name" required placeholder="Plan name (EN)">
+                        <input class="{{ $errors->has('name') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name" required placeholder="{{ __('Plan name (EN)') }}">
                         @error('name')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'ms'" x-cloak>
-                        <input class="{{ $errors->has('name_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name_ms" placeholder="Malay name">
+                        <input class="{{ $errors->has('name_ms') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name_ms" placeholder="{{ __('Malay name') }}">
                         @error('name_ms')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
                     <div x-show="activeLang === 'zh'" x-cloak>
-                        <input class="{{ $errors->has('name_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name_zh" placeholder="Chinese name">
+                        <input class="{{ $errors->has('name_zh') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="name_zh" placeholder="{{ __('Chinese name') }}">
                         @error('name_zh')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </div>
 
-                    <p class="mt-1 text-xs text-slate-500">Switch tabs to fill EN/MS/ZH. If MS/ZH is empty, the app will fall back to English.</p>
+                    <p class="mt-1 text-xs text-slate-500">{{ __('Switch tabs to fill MS/ZH. If MS/ZH is empty, the app will fall back to English.') }}</p>
                 </x-admin.form.group>
                 <x-admin.form.group label="Audience *">
                     <select class="{{ $errors->has('audience') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="audience" required>
-                        <option value="member">Member</option>
-                        <option value="merchant">Merchant</option>
-                        <option value="both">Both</option>
+                        <option value="member">{{ __('Member') }}</option>
+                        <option value="merchant">{{ __('Merchant') }}</option>
+                        <option value="both">{{ __('Both') }}</option>
                     </select>
                     @error('audience')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                 </x-admin.form.group>
@@ -687,11 +687,11 @@ new #[Layout('layouts.app')] class extends Component {
                     <x-admin.form.group label="Discount *">
                         <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
                             <select class="{{ $errors->has('discount_type') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="discount_type" x-model="discountType" @change="recalc()" required>
-                                <option value="none">No Discount</option>
-                                <option value="percentage">Percentage (%)</option>
-                                <option value="fixed">Fixed Amount (RM)</option>
+                                <option value="none">{{ __('No Discount') }}</option>
+                                <option value="percentage">{{ __('Percentage (%)') }}</option>
+                                <option value="fixed">{{ __('Fixed Amount (RM)') }}</option>
                             </select>
-                            <input type="number" min="0" step="0.01" class="{{ $errors->has('discount_value') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="discount_value" x-model.number="discountValue" @input="recalc()" placeholder="Discount value" required>
+                            <input type="number" min="0" step="0.01" class="{{ $errors->has('discount_value') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="discount_value" x-model.number="discountValue" @input="recalc()" placeholder="{{ __('Discount value') }}" required>
                         </div>
                         @error('discount_type')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                         @error('discount_value')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
@@ -709,33 +709,33 @@ new #[Layout('layouts.app')] class extends Component {
                 </div>
                 <x-admin.form.group label="Duration *">
                     <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                        <input type="number" min="1" class="{{ $errors->has('duration_value') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="duration_value" placeholder="Value" required>
+                        <input type="number" min="1" class="{{ $errors->has('duration_value') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="duration_value" placeholder="{{ __('Value') }}" required>
                         <select class="{{ $errors->has('duration_unit') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="duration_unit" required>
-                            <option value="day">Day(s)</option>
-                            <option value="month">Month(s)</option>
-                            <option value="year">Year(s)</option>
+                            <option value="day">{{ __('Day(s)') }}</option>
+                            <option value="month">{{ __('Month(s)') }}</option>
+                            <option value="year">{{ __('Year(s)') }}</option>
                         </select>
                     </div>
                     @error('duration_value')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     @error('duration_unit')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                 </x-admin.form.group>
                 <x-admin.form.group label="Plan Descriptions">
-                    <p class="mt-0.5 text-xs text-slate-500">Add descriptions in EN. Switch tabs to fill MS/ZH for each saved item. If MS/ZH is empty, the app will fall back to English.</p>
+                    <p class="mt-0.5 text-xs text-slate-500">{{ __('Add descriptions in EN.') }} {{ __('Switch tabs to fill MS/ZH for each saved item. If MS/ZH is empty, the app will fall back to English.') }}</p>
 
                     <div class="mt-3 space-y-2">
                         <div class="grid grid-cols-1 gap-2">
                             <div x-show="activeLang === 'en'" x-cloak>
-                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescription" placeholder="EN (required) e.g. Up to 10 campaigns">
+                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescription" placeholder="{{ __('EN (required) e.g. Up to 10 campaigns') }}">
                             </div>
                             <div x-show="activeLang === 'ms'" x-cloak>
-                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescriptionMs" placeholder="MS">
+                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescriptionMs" placeholder="{{ __('MS') }}">
                             </div>
                             <div x-show="activeLang === 'zh'" x-cloak>
-                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescriptionZh" placeholder="ZH">
+                                <input class="pk-input min-w-0 flex-1" wire:model.live="newDescriptionZh" placeholder="{{ __('ZH') }}">
                             </div>
 
                             <div class="flex justify-end">
-                                <button type="button" class="pk-btn-secondary px-3 py-2 text-xs" wire:click="addDescription">Add</button>
+                                <button type="button" class="pk-btn-secondary px-3 py-2 text-xs" wire:click="addDescription">{{ __('Add') }}</button>
                             </div>
                         </div>
 
@@ -746,7 +746,7 @@ new #[Layout('layouts.app')] class extends Component {
                                         <input
                                             class="{{ $errors->has('descriptions.'.$index) ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}"
                                             wire:model.live="descriptions.{{ $index }}"
-                                            placeholder="EN description"
+                                            placeholder="{{ __('EN description') }}"
                                         >
                                         @error('descriptions.'.$index)<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
@@ -755,7 +755,7 @@ new #[Layout('layouts.app')] class extends Component {
                                         <input
                                             class="{{ $errors->has('descriptionsMs.'.$index) ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}"
                                             wire:model.live="descriptionsMs.{{ $index }}"
-                                            placeholder="MS"
+                                            placeholder="{{ __('MS') }}"
                                         >
                                         @error('descriptionsMs.'.$index)<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
@@ -764,27 +764,27 @@ new #[Layout('layouts.app')] class extends Component {
                                         <input
                                             class="{{ $errors->has('descriptionsZh.'.$index) ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}"
                                             wire:model.live="descriptionsZh.{{ $index }}"
-                                            placeholder="ZH"
+                                            placeholder="{{ __('ZH') }}"
                                         >
                                         @error('descriptionsZh.'.$index)<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                                     </div>
 
                                     <div class="flex justify-end">
-                                        <button type="button" class="text-xs font-semibold text-rose-600" wire:click="removeDescription({{ $index }})">Delete</button>
+                                        <button type="button" class="text-xs font-semibold text-rose-600" wire:click="removeDescription({{ $index }})">{{ __('Delete') }}</button>
                                     </div>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </x-admin.form.group>
-                <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="is_active"> Active</label>
+                <label class="flex items-center gap-2 text-sm"><input type="checkbox" wire:model="is_active"> {{ __('Active') }}</label>
                 @if($planId)
                     @can('subscriptions.edit')
-                    <button class="pk-btn-primary w-full">Update Plan</button>
+                    <button class="pk-btn-primary w-full">{{ __('Update Plan') }}</button>
                     @endcan
                 @else
                     @can('subscriptions.create')
-                    <button class="pk-btn-primary w-full">Create Plan</button>
+                    <button class="pk-btn-primary w-full">{{ __('Create Plan') }}</button>
                     @endcan
                 @endif
             </form>
@@ -811,10 +811,10 @@ new #[Layout('layouts.app')] class extends Component {
                             <x-admin.status-badge :status="$plan->is_active ? 'active' : 'inactive'" />
                         </div>
                         <dl class="mt-3 space-y-1 text-xs text-slate-600">
-                            <div class="flex justify-between gap-3"><dt>Audience</dt><dd>{{ ucfirst($plan->audience) }}</dd></div>
-                            <div class="flex justify-between gap-3"><dt>Price</dt><dd>RM {{ number_format((float) $plan->price, 2) }}</dd></div>
-                            <div class="flex justify-between gap-3"><dt>Final</dt><dd>RM {{ number_format((float) $plan->final_price, 2) }}</dd></div>
-                            <div class="flex justify-between gap-3"><dt>Duration</dt><dd>{{ $plan->duration_value }} {{ Str::plural($plan->duration_unit, $plan->duration_value) }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Audience') }}</dt><dd>{{ __(ucfirst($plan->audience)) }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Price') }}</dt><dd>RM {{ number_format((float) $plan->price, 2) }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Final') }}</dt><dd>RM {{ number_format((float) $plan->final_price, 2) }}</dd></div>
+                            <div class="flex justify-between gap-3"><dt>{{ __('Duration') }}</dt><dd>{{ $plan->duration_value }} {{ Str::plural($plan->duration_unit, $plan->duration_value) }}</dd></div>
                         </dl>
                         <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
                             <button
@@ -824,15 +824,15 @@ new #[Layout('layouts.app')] class extends Component {
                             >
                                 History
                             </button>
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editPlan({{ $plan->id }})">View</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editPlan({{ $plan->id }})">{{ __('View') }}</button>
                             @can('subscriptions.edit')
-                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editPlan({{ $plan->id }})">Edit</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs" wire:click="editPlan({{ $plan->id }})">{{ __('Edit') }}</button>
                             @endcan
                             @can('subscriptions.activate')
                             @if($plan->is_active)
-                                <button class="rounded-xl border px-2 py-2 text-xs font-semibold sm:col-span-2" style="color:#be123c;" wire:click="togglePlan({{ $plan->id }})">Deactivate</button>
+                                <button class="rounded-xl border px-2 py-2 text-xs font-semibold sm:col-span-2" style="color:#be123c;" wire:click="togglePlan({{ $plan->id }})">{{ __('Deactivate') }}</button>
                             @else
-                                <button class="rounded-xl border px-2 py-2 text-xs font-semibold sm:col-span-2" style="color:#15803d;" wire:click="togglePlan({{ $plan->id }})">Activate</button>
+                                <button class="rounded-xl border px-2 py-2 text-xs font-semibold sm:col-span-2" style="color:#15803d;" wire:click="togglePlan({{ $plan->id }})">{{ __('Activate') }}</button>
                             @endif
                             @endcan
                         </div>
@@ -875,24 +875,24 @@ new #[Layout('layouts.app')] class extends Component {
                                         Status <span>{{ $this->sortIcon('is_active') }}</span>
                                     </button>
                                 </th>
-                                <th class="whitespace-nowrap text-right">Actions</th>
+                                <th class="whitespace-nowrap text-right">{{ __('Actions') }}</th>
                             </tr>
                         </thead>
                             @foreach($plans as $plan)
                             <tbody wire:key="subscription-plan-row-{{ $plan->id }}">
                                 <tr class="align-top">
                                     <td class="whitespace-nowrap">{{ $plan->name }}</td>
-                                    <td class="whitespace-nowrap">{{ ucfirst($plan->audience) }}</td>
+                                    <td class="whitespace-nowrap">{{ __(ucfirst($plan->audience)) }}</td>
                                     <td class="whitespace-nowrap">RM {{ number_format((float) $plan->price, 2) }}</td>
                                     <td class="whitespace-nowrap">RM {{ number_format((float) $plan->final_price, 2) }}</td>
                                     <td class="whitespace-nowrap">{{ $plan->duration_value }} {{ Str::plural($plan->duration_unit, $plan->duration_value) }}</td>
                                     <td class="whitespace-nowrap"><x-admin.status-badge :status="$plan->is_active ? 'active' : 'inactive'" /></td>
                                     <td class="whitespace-nowrap text-right">
                                         <div class="flex flex-wrap items-center justify-end gap-1">
-                                            <button type="button" class="pk-btn-secondary pk-btn-accent px-2 py-1.5 text-xs font-semibold" wire:click="openPlanHistoryModal({{ $plan->id }})">History</button>
-                                            <button class="pk-btn-secondary px-2 py-1.5 text-xs" wire:click="editPlan({{ $plan->id }})">View</button>
+                                            <button type="button" class="pk-btn-secondary pk-btn-accent px-2 py-1.5 text-xs font-semibold" wire:click="openPlanHistoryModal({{ $plan->id }})">{{ __('History') }}</button>
+                                            <button class="pk-btn-secondary px-2 py-1.5 text-xs" wire:click="editPlan({{ $plan->id }})">{{ __('View') }}</button>
                                             @can('subscriptions.edit')
-                                            <button class="pk-btn-secondary px-2 py-1.5 text-xs" wire:click="editPlan({{ $plan->id }})">Edit</button>
+                                            <button class="pk-btn-secondary px-2 py-1.5 text-xs" wire:click="editPlan({{ $plan->id }})">{{ __('Edit') }}</button>
                                             @endcan
                                             @can('subscriptions.activate')
                                             @if($plan->is_active)
@@ -956,7 +956,7 @@ new #[Layout('layouts.app')] class extends Component {
         >
             <div class="flex shrink-0 items-center justify-between border-b border-slate-100 px-6 py-4">
                 <div>
-                    <h2 class="text-base font-bold text-slate-800">Subscription &amp; payment history</h2>
+                    <h2 class="text-base font-bold text-slate-800">{{ __('Subscription &amp; payment history') }}</h2>
                     @if($historyModalPlanName !== '')
                         <p class="mt-0.5 text-xs text-slate-500">{{ $historyModalPlanName }}</p>
                     @endif
@@ -965,7 +965,7 @@ new #[Layout('layouts.app')] class extends Component {
                     type="button"
                     wire:click="closePlanHistoryModal"
                     class="flex h-8 w-8 items-center justify-center rounded-full text-slate-400 transition hover:bg-slate-100 hover:text-slate-600"
-                    aria-label="Close"
+                    aria-label="{{ __('Close') }}"
                 >
                     <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>

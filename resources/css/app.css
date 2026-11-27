@@ -10,6 +10,9 @@
     :root {
         --pk-red: #ed1c24;
         --pk-red-dark: #ca111b;
+        --pk-primary: #9a7300;
+        --pk-primary-hover: #795b00;
+        --pk-primary-soft: #fff5cf;
         --pk-blue: #0d4f8b;
         --pk-blue-soft: #edf4fd;
         --pk-bg: #f5f6fa;
@@ -56,8 +59,8 @@
     }
 
     .pk-sidebar-link-active {
-        color: var(--pk-red);
-        background-color: rgb(237 28 36 / 0.1);
+        color: var(--pk-primary);
+        background-color: var(--pk-primary-soft);
     }
 
     .pk-page-title {
@@ -81,8 +84,8 @@
     }
 
     .pk-input:focus {
-        border-color: var(--pk-red);
-        --tw-ring-color: rgb(237 28 36 / 0.2);
+        border-color: var(--pk-primary);
+        --tw-ring-color: rgb(154 115 0 / 0.2);
     }
 
     .pk-label {
@@ -92,11 +95,11 @@
 
     .pk-btn-primary {
         @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition;
-        background: var(--pk-red);
+        background: var(--pk-primary);
     }
 
     .pk-btn-primary:hover {
-        background: var(--pk-red-dark);
+        background: var(--pk-primary-hover);
     }
 
     .pk-btn-secondary {
@@ -111,11 +114,11 @@
 
     /** Secondary button red accent (e.g. History) */
     .pk-btn-secondary.pk-btn-accent {
-        color: var(--pk-red);
+        color: var(--pk-primary);
     }
 
     .pk-btn-secondary.pk-btn-accent:hover {
-        color: var(--pk-red-dark);
+        color: var(--pk-primary-hover);
     }
 
     .pk-table-wrap {

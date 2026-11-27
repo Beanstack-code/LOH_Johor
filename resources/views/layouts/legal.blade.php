@@ -8,7 +8,7 @@
         <title>{{ $title ?? 'Privacy Policy' }} — {{ config('app.name', '柔佛州羅氏公会 Portal') }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="{{ asset('images/pkpms-logo.png') }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('images/loh-johor-logo.jpg') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -23,11 +23,11 @@
                 <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
                     <a href="{{ url('/') }}" class="flex items-center gap-3">
                         <div class="h-10 w-10 rounded-xl bg-white border border-slate-200 flex items-center justify-center">
-                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="柔佛州羅氏公会 Logo" class="h-7 w-7 object-contain">
+                            <img src="{{ asset('images/loh-johor-logo.jpg') }}" alt="柔佛州羅氏公会 Logo" class="h-7 w-7 object-contain">
                         </div>
                         <span class="font-semibold text-slate-900">柔佛州羅氏公会 Portal</span>
                     </a>
-                    <a href="{{ route('login') }}" class="text-sm font-medium text-[#ed1c24] hover:underline">
+                    <a href="{{ route('login') }}" class="text-sm font-medium text-[#9a7300] hover:underline">
                         Back to Login
                     </a>
                 </div>

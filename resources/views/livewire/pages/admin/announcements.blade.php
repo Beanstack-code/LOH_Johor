@@ -90,7 +90,7 @@ new #[Layout('layouts.app')] class extends Component {
 
     private function showToast(string $message, string $type = 'success'): void
     {
-        $this->successMessage = $message;
+        $this->successMessage = __($message);
         $this->toastType = $type;
         $this->js("
             window.dispatchEvent(new CustomEvent('pk-announcement-toast', { detail: { message: " . json_encode($message) . ", type: " . json_encode($type) . " } }));
@@ -240,8 +240,8 @@ new #[Layout('layouts.app')] class extends Component {
 
 <x-slot name="header">
     <div>
-        <h1 class="pk-page-title">Announcements Management</h1>
-        <p class="pk-subtitle">Publish banners and platform-wide updates with start/end windows.</p>
+        <h1 class="pk-page-title">{{ __('Announcements Management') }}</h1>
+        <p class="pk-subtitle">{{ __('Publish banners and platform-wide updates with start/end windows.') }}</p>
     </div>
 </x-slot>
 
@@ -265,16 +265,16 @@ new #[Layout('layouts.app')] class extends Component {
 
     {{-- Search and Filter bar --}}
     <section class="pk-filter-bar">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by title..." class="pk-input w-full sm:max-w-sm">
+        <input type="text" wire:model.live.debounce.300ms="search" placeholder="{{ __('Search by title...') }}" class="pk-input w-full sm:max-w-sm">
         <select wire:model.live="statusFilter" class="pk-input w-full sm:max-w-xs">
-            <option value="">All Status</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
+            <option value="">{{ __('All Status') }}</option>
+            <option value="draft">{{ __('Draft') }}</option>
+            <option value="published">{{ __('Published') }}</option>
         </select>
         <select wire:model.live="highlightFilter" class="pk-input w-full sm:max-w-xs">
-            <option value="">All Highlights</option>
-            <option value="yes">Highlighted</option>
-            <option value="no">Not Highlighted</option>
+            <option value="">{{ __('All Highlights') }}</option>
+            <option value="yes">{{ __('Highlighted') }}</option>
+            <option value="no">{{ __('Not Highlighted') }}</option>
         </select>
     </section>
 
@@ -327,7 +327,7 @@ new #[Layout('layouts.app')] class extends Component {
         </div>
 
         <div class="flex items-center justify-between gap-3">
-            <h2 class="text-base font-semibold text-slate-800">{{ $announcementId ? 'Edit Announcement' : 'Publish Announcement' }}</h2>
+            <h2 class="text-base font-semibold text-slate-800">{{ __($announcementId ? 'Edit Announcement' : 'Publish Announcement') }}</h2>
             <div class="flex items-center gap-2">
                 @if($announcementId)
                     @can('announcements.create')
@@ -390,19 +390,19 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <x-admin.form.group label="Category">
                     <select class="pk-input" wire:model="category">
-                        <option value="">-- Select Category --</option>
-                        <option value="general">General</option>
-                        <option value="promotion">Promotion</option>
-                        <option value="event">Event</option>
-                        <option value="update">System Update</option>
-                        <option value="maintenance">Maintenance</option>
+                        <option value="">{{ __('-- Select Category --') }}</option>
+                        <option value="general">{{ __('General') }}</option>
+                        <option value="promotion">{{ __('Promotion') }}</option>
+                        <option value="event">{{ __('Event') }}</option>
+                        <option value="update">{{ __('System Update') }}</option>
+                        <option value="maintenance">{{ __('Maintenance') }}</option>
                     </select>
                 </x-admin.form.group>
 
                 <div x-show="activeLang === 'en'" x-cloak>
                     <x-admin.form.group label="Content *">
-                        <textarea class="{{ $errors->has('content') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content" rows="8" placeholder="Enter announcement content. Use line breaks for paragraphs."></textarea>
-                        <p class="mt-1 text-xs text-slate-500">Use Enter key to create new paragraphs. Content will preserve line breaks.</p>
+                        <textarea class="{{ $errors->has('content') ? 'pk-input border-rose-400 ring-1 ring-rose-200' : 'pk-input' }}" wire:model="content" rows="8" placeholder="{{ __('Enter announcement content. Use line breaks for paragraphs.') }}"></textarea>
+                        <p class="mt-1 text-xs text-slate-500">{{ __('Use Enter key to create new paragraphs. Content will preserve line breaks.') }}</p>
                         @error('content')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                     </x-admin.form.group>
                 </div>
@@ -421,8 +421,8 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <div x-show="activeLang === 'en'" x-cloak>
                     <x-admin.form.group label="Terms and Conditions">
-                        <textarea class="pk-input" wire:model="terms_and_conditions" rows="6" placeholder="Enter terms and conditions"></textarea>
-                        <p class="mt-1 text-xs text-slate-500">Add any terms, conditions, or disclaimers for this announcement.</p>
+                        <textarea class="pk-input" wire:model="terms_and_conditions" rows="6" placeholder="{{ __('Enter terms and conditions') }}"></textarea>
+                        <p class="mt-1 text-xs text-slate-500">{{ __('Add any terms, conditions, or disclaimers for this announcement.') }}</p>
                     </x-admin.form.group>
                 </div>
                 <div x-show="activeLang === 'ms'" x-cloak>
@@ -443,7 +443,7 @@ new #[Layout('layouts.app')] class extends Component {
                     @if($existingCoverImage)
                         <div class="mb-2 overflow-hidden rounded-xl border border-slate-200">
                             <img src="{{ Storage::url($existingCoverImage) }}" alt="Current cover" class="h-32 w-full object-cover">
-                            <p class="px-2 py-1 text-xs text-slate-500">Current cover image</p>
+                            <p class="px-2 py-1 text-xs text-slate-500">{{ __('Current cover image') }}</p>
                         </div>
                     @endif
                     <div
@@ -475,18 +475,18 @@ new #[Layout('layouts.app')] class extends Component {
                             @dragleave.prevent="isDragging = false"
                             @drop.prevent="handleDrop($event)"
                             @click="$refs.coverInput.click()"
-                            :class="isDragging ? 'border-[#ed1c24] bg-rose-50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100'"
+                            :class="isDragging ? 'border-[#9a7300] bg-amber-50' : 'border-slate-200 bg-slate-50 hover:bg-slate-100'"
                             class="cursor-pointer rounded-xl border-2 border-dashed p-5 text-center transition"
                         >
                             <svg class="mx-auto mb-2 h-7 w-7 text-slate-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></svg>
-                            <p class="text-xs font-medium text-slate-600">Drag & drop or <span class="text-[#ed1c24]">click to browse</span></p>
-                            <p class="mt-0.5 text-xs text-slate-400">JPG, PNG, GIF, WEBP — max 10 MB</p>
+                            <p class="text-xs font-medium text-slate-600">{{ __('Drag & drop or') }} <span class="text-[#9a7300]">{{ __('click to browse') }}</span></p>
+                            <p class="mt-0.5 text-xs text-slate-400">{{ __('JPG, PNG, GIF, WEBP — max 10 MB') }}</p>
                             <input x-ref="coverInput" type="file" wire:model="coverImageFile" accept="image/jpeg,image/png,image/gif,image/webp" class="hidden" @change="handleChange($event)">
                         </div>
                         @error('coverImageFile')<p class="mt-1 text-xs text-rose-600">{{ $message }}</p>@enderror
                         <div x-show="preview !== null" x-cloak class="mt-2 overflow-hidden rounded-xl border border-slate-200">
                             <img :src="preview" class="h-32 w-full object-cover">
-                            <p class="px-2 py-1 text-xs text-slate-500">New cover preview</p>
+                            <p class="px-2 py-1 text-xs text-slate-500">{{ __('New cover preview') }}</p>
                         </div>
                     </div>
                 </x-admin.form.group>
@@ -501,8 +501,8 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <x-admin.form.group label="Status">
                     <select class="pk-input" wire:model="status">
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
+                        <option value="draft">{{ __('Draft') }}</option>
+                        <option value="published">{{ __('Published') }}</option>
                     </select>
                 </x-admin.form.group>
 
@@ -513,11 +513,11 @@ new #[Layout('layouts.app')] class extends Component {
 
                 @if($announcementId)
                     @can('announcements.edit')
-                    <button class="pk-btn-primary w-full">Update Announcement</button>
+                    <button class="pk-btn-primary w-full">{{ __('Update Announcement') }}</button>
                     @endcan
                 @else
                     @can('announcements.create')
-                    <button class="pk-btn-primary w-full">Save Announcement</button>
+                    <button class="pk-btn-primary w-full">{{ __('Save Announcement') }}</button>
                     @endcan
                 @endif
             </form>
@@ -537,32 +537,32 @@ new #[Layout('layouts.app')] class extends Component {
                             <div>
                                 <p class="text-sm font-semibold text-slate-800">{{ $announcement->title }}</p>
                                 @if($announcement->category)
-                                    <span class="text-xs text-slate-500 font-medium">{{ ucfirst($announcement->category) }}</span>
+                                    <span class="text-xs text-slate-500 font-medium">{{ __($announcement->category) }}</span>
                                 @endif
                                 @if($announcement->is_highlighted)
-                                    <span class="text-xs text-amber-600 font-medium ml-2">★ Highlighted</span>
+                                    <span class="text-xs text-amber-600 font-medium ml-2">{{ __('★ Highlighted') }}</span>
                                 @endif
                             </div>
                         </div>
                         <x-admin.status-badge :status="$announcement->status" />
                     </div>
                     <dl class="mt-3 space-y-1 text-xs text-slate-600">
-                        <div class="flex justify-between gap-3"><dt>Start</dt><dd>{{ optional($announcement->starts_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
-                        <div class="flex justify-between gap-3"><dt>End</dt><dd>{{ optional($announcement->ends_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
+                        <div class="flex justify-between gap-3"><dt>{{ __('Start') }}</dt><dd>{{ optional($announcement->starts_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
+                        <div class="flex justify-between gap-3"><dt>{{ __('End') }}</dt><dd>{{ optional($announcement->ends_at)->format('d M Y, h:i A') ?: '-' }}</dd></div>
                     </dl>
                     @if($announcement->terms_and_conditions)
                         <div class="mt-2 text-xs text-slate-500">
-                            <span class="font-medium">T&C:</span> {{ Str::limit($announcement->terms_and_conditions, 50) }}
+                            <span class="font-medium">{{ __('T&C:') }}</span> {{ Str::limit($announcement->terms_and_conditions, 50) }}
                         </div>
                     @endif
                     <div class="mt-3 flex flex-wrap gap-2">
-                        <button class="pk-btn-secondary flex-1 min-w-[4rem] px-2 py-2 text-xs" wire:click="edit({{ $announcement->id }})">View</button>
+                        <button class="pk-btn-secondary flex-1 min-w-[4rem] px-2 py-2 text-xs" wire:click="edit({{ $announcement->id }})">{{ __('View') }}</button>
                         @can('announcements.edit')
-                        <button class="pk-btn-secondary flex-1 min-w-[4rem] px-2 py-2 text-xs" wire:click="edit({{ $announcement->id }})">Edit</button>
+                        <button class="pk-btn-secondary flex-1 min-w-[4rem] px-2 py-2 text-xs" wire:click="edit({{ $announcement->id }})">{{ __('Edit') }}</button>
                         @if($announcement->status === 'published')
-                            <button class="pk-btn-secondary px-2 py-2 text-xs text-amber-600" wire:click="quickDraft({{ $announcement->id }})">Draft</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs text-amber-600" wire:click="quickDraft({{ $announcement->id }})">{{ __('Draft') }}</button>
                         @else
-                            <button class="pk-btn-secondary px-2 py-2 text-xs text-emerald-600" wire:click="quickPublish({{ $announcement->id }})">Publish</button>
+                            <button class="pk-btn-secondary px-2 py-2 text-xs text-emerald-600" wire:click="quickPublish({{ $announcement->id }})">{{ __('Publish') }}</button>
                         @endif
                         @endcan
                         @can('announcements.delete')
@@ -571,7 +571,7 @@ new #[Layout('layouts.app')] class extends Component {
                             class="w-full rounded-lg border border-rose-200 bg-rose-50 px-2 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 sm:w-auto sm:flex-1"
                             wire:click="deleteAnnouncement({{ $announcement->id }})"
                             wire:confirm="Delete this announcement and its cover image? This cannot be undone."
-                        >Delete</button>
+                        >{{ __('Delete') }}</button>
                         @endcan
                     </div>
                 </article>
@@ -585,22 +585,22 @@ new #[Layout('layouts.app')] class extends Component {
                     <thead>
                         <tr>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('title')" class="inline-flex items-center gap-1">Title <span>{{ $this->sortIcon('title') }}</span></button>
+                                <button type="button" wire:click="sortBy('title')" class="inline-flex items-center gap-1">{{ __('Title') }} <span>{{ $this->sortIcon('title') }}</span></button>
                             </th>
-                            <th class="whitespace-nowrap">Category</th>
+                            <th class="whitespace-nowrap">{{ __('Category') }}</th>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('starts_at')" class="inline-flex items-center gap-1">Start <span>{{ $this->sortIcon('starts_at') }}</span></button>
-                            </th>
-                            <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('ends_at')" class="inline-flex items-center gap-1">End <span>{{ $this->sortIcon('ends_at') }}</span></button>
+                                <button type="button" wire:click="sortBy('starts_at')" class="inline-flex items-center gap-1">{{ __('Start') }} <span>{{ $this->sortIcon('starts_at') }}</span></button>
                             </th>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('is_highlighted')" class="inline-flex items-center gap-1">Highlight <span>{{ $this->sortIcon('is_highlighted') }}</span></button>
+                                <button type="button" wire:click="sortBy('ends_at')" class="inline-flex items-center gap-1">{{ __('End') }} <span>{{ $this->sortIcon('ends_at') }}</span></button>
                             </th>
                             <th class="whitespace-nowrap">
-                                <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">Status <span>{{ $this->sortIcon('status') }}</span></button>
+                                <button type="button" wire:click="sortBy('is_highlighted')" class="inline-flex items-center gap-1">{{ __('Highlight') }} <span>{{ $this->sortIcon('is_highlighted') }}</span></button>
                             </th>
-                            <th class="whitespace-nowrap text-right">Actions</th>
+                            <th class="whitespace-nowrap">
+                                <button type="button" wire:click="sortBy('status')" class="inline-flex items-center gap-1">{{ __('Status') }} <span>{{ $this->sortIcon('status') }}</span></button>
+                            </th>
+                            <th class="whitespace-nowrap text-right">{{ __('Actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -614,14 +614,14 @@ new #[Layout('layouts.app')] class extends Component {
                                         <div>
                                             <p class="font-semibold text-slate-700">{{ $announcement->title }}</p>
                                             @if($announcement->terms_and_conditions)
-                                                <p class="text-xs text-slate-400">Has T&C</p>
+                                                <p class="text-xs text-slate-400">{{ __('Has T&C') }}</p>
                                             @endif
                                         </div>
                                     </div>
                                 </td>
                                 <td class="whitespace-nowrap">
                                     @if($announcement->category)
-                                        <span class="text-xs font-medium text-slate-600">{{ ucfirst($announcement->category) }}</span>
+                                        <span class="text-xs font-medium text-slate-600">{{ __($announcement->category) }}</span>
                                     @else
                                         <span class="text-xs text-slate-400">-</span>
                                     @endif
@@ -630,20 +630,20 @@ new #[Layout('layouts.app')] class extends Component {
                                 <td class="whitespace-nowrap">{{ optional($announcement->ends_at)->format('d M Y, h:i A') ?: '-' }}</td>
                                 <td class="whitespace-nowrap">
                                     @if($announcement->is_highlighted)
-                                        <span class="text-xs text-amber-600 font-semibold">★ Yes</span>
+                                        <span class="text-xs text-amber-600 font-semibold">{{ __('★ Yes') }}</span>
                                     @else
-                                        <span class="text-xs text-slate-400">No</span>
+                                        <span class="text-xs text-slate-400">{{ __('No') }}</span>
                                     @endif
                                 </td>
                                 <td class="whitespace-nowrap"><x-admin.status-badge :status="$announcement->status" /></td>
                                 <td class="whitespace-nowrap text-right space-x-1">
-                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="edit({{ $announcement->id }})">View</button>
+                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="edit({{ $announcement->id }})">{{ __('View') }}</button>
                                     @can('announcements.edit')
-                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="edit({{ $announcement->id }})">Edit</button>
+                                    <button class="pk-btn-secondary px-3 py-2 text-xs" wire:click="edit({{ $announcement->id }})">{{ __('Edit') }}</button>
                                     @if($announcement->status === 'published')
-                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-amber-600" wire:click="quickDraft({{ $announcement->id }})">Draft</button>
+                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-amber-600" wire:click="quickDraft({{ $announcement->id }})">{{ __('Draft') }}</button>
                                     @else
-                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-emerald-600" wire:click="quickPublish({{ $announcement->id }})">Publish</button>
+                                        <button class="pk-btn-secondary px-3 py-2 text-xs text-emerald-600" wire:click="quickPublish({{ $announcement->id }})">{{ __('Publish') }}</button>
                                     @endif
                                     @endcan
                                     @can('announcements.delete')
@@ -652,7 +652,7 @@ new #[Layout('layouts.app')] class extends Component {
                                         class="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 transition hover:bg-rose-100"
                                         wire:click="deleteAnnouncement({{ $announcement->id }})"
                                         wire:confirm="Delete this announcement and its cover image? This cannot be undone."
-                                    >Delete</button>
+                                    >{{ __('Delete') }}</button>
                                     @endcan
                                 </td>
                             </tr>

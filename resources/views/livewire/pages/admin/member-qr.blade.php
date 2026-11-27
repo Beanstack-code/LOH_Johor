@@ -48,21 +48,21 @@ new #[Layout('layouts.app')] class extends Component {
 <div>
     <x-slot name="header">
         <div>
-            <h1 class="pk-page-title">Member QR Codes</h1>
-            <p class="pk-subtitle">Generate and display QR codes for members</p>
+            <h1 class="pk-page-title">{{ __('Member QR Codes') }}</h1>
+            <p class="pk-subtitle">{{ __('Generate and display QR codes for members') }}</p>
         </div>
     </x-slot>
 
     <div class="space-y-6">
     <!-- Member Selection -->
     <div class="pk-card p-5">
-        <h2 class="text-base font-semibold text-slate-800 mb-4">Select Member</h2>
+        <h2 class="text-base font-semibold text-slate-800 mb-4">{{ __('Select Member') }}</h2>
         <div class="max-w-md" x-data="{ open: false, search: '' }">
-            <label class="pk-label">Choose a member</label>
+            <label class="pk-label">{{ __('Choose a member') }}</label>
             <div class="relative">
                 <button @click="open = !open" type="button" class="pk-input text-left flex items-center justify-between w-full">
                     <span class="{{ $selectedMember ? 'text-slate-700' : 'text-slate-400' }}">
-                        {{ $selectedMember ? $selectedMember->full_name . ' (' . $selectedMember->email . ')' : '-- Select Member --' }}
+                        {{ $selectedMember ? $selectedMember->full_name . ' (' . $selectedMember->email . ')' : __('-- Select Member --') }}
                     </span>
                     <svg class="h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
@@ -71,7 +71,7 @@ new #[Layout('layouts.app')] class extends Component {
 
                 <div x-show="open" @click.away="open = false" x-cloak class="absolute z-10 mt-1 w-full bg-white border border-slate-200 rounded-xl shadow-lg max-h-80 overflow-hidden">
                     <div class="p-2 border-b border-slate-200">
-                        <input type="text" x-model="search" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#ed1c24] focus:border-[#ed1c24]" placeholder="Search members...">
+                        <input type="text" x-model="search" class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#9a7300] focus:border-[#9a7300]" placeholder="{{ __('Search members...') }}">
                     </div>
                     <div class="overflow-y-auto max-h-64">
                         @foreach($members as $member)
@@ -94,30 +94,30 @@ new #[Layout('layouts.app')] class extends Component {
         <div class="grid gap-6 lg:grid-cols-2">
             <!-- Member Information -->
             <div class="pk-card p-5">
-                <h2 class="text-base font-semibold text-slate-800 mb-4">Member Information</h2>
+                <h2 class="text-base font-semibold text-slate-800 mb-4">{{ __('Member Information') }}</h2>
                 <div class="space-y-3">
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Membership ID</p>
-                        <p class="text-sm font-bold text-[#ed1c24]">{{ $selectedMember->membership_id }}</p>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ __('Membership ID') }}</p>
+                        <p class="text-sm font-bold text-[#9a7300]">{{ $selectedMember->membership_id }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Full Name</p>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ __('Full Name') }}</p>
                         <p class="text-sm font-semibold text-slate-800">{{ $selectedMember->full_name }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Email</p>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ __('Email') }}</p>
                         <p class="text-sm text-slate-700">{{ $selectedMember->email }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Phone</p>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ __('Phone') }}</p>
                         <p class="text-sm text-slate-700">{{ $selectedMember->phone ?? 'N/A' }}</p>
                     </div>
                     <div>
-                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Status</p>
+                        <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">{{ __('Status') }}</p>
                         @if($selectedMember->status === 'active')
-                            <span class="pk-badge-success">Active</span>
+                            <span class="pk-badge-success">{{ __('Active') }}</span>
                         @else
-                            <span class="pk-badge-warning">{{ ucfirst($selectedMember->status) }}</span>
+                            <span class="pk-badge-warning">{{ __(ucfirst($selectedMember->status)) }}</span>
                         @endif
                     </div>
                 </div>
@@ -125,12 +125,12 @@ new #[Layout('layouts.app')] class extends Component {
 
             <!-- QR Code Display -->
             <div class="pk-card p-5">
-                <h2 class="text-base font-semibold text-slate-800 mb-4">QR Code</h2>
+                <h2 class="text-base font-semibold text-slate-800 mb-4">{{ __('QR Code') }}</h2>
                 <div class="flex flex-col items-center justify-center space-y-4">
                     <div class="bg-white p-6 rounded-xl border-2 border-slate-200">
                         {!! QrCode::size(250)->generate($qrToken) !!}
                     </div>
-                    <p class="text-xs text-slate-500 text-center">Scan this QR code to view your member details</p>
+                    <p class="text-xs text-slate-500 text-center">{{ __('Scan this QR code to view your member details') }}</p>
                     
                     <!-- Action Buttons -->
                     <div class="flex gap-3 mt-4">
@@ -155,8 +155,8 @@ new #[Layout('layouts.app')] class extends Component {
 
         <!-- QR Code Payload Info -->
         <div class="pk-card p-5">
-            <h2 class="text-base font-semibold text-slate-800 mb-2">QR Code Data</h2>
-            <p class="text-sm text-slate-600 mb-3">This QR code contains the following information:</p>
+            <h2 class="text-base font-semibold text-slate-800 mb-2">{{ __('QR Code Data') }}</h2>
+            <p class="text-sm text-slate-600 mb-3">{{ __('This QR code contains the following information:') }}</p>
             <div class="bg-slate-50 rounded-lg p-4 font-mono text-sm text-slate-700 break-all">
                 {{ $qrToken }}
             </div>
@@ -167,8 +167,8 @@ new #[Layout('layouts.app')] class extends Component {
             <svg class="w-16 h-16 mx-auto text-slate-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
             </svg>
-            <h3 class="text-lg font-semibold text-slate-700 mb-2">No Member Selected</h3>
-            <p class="text-sm text-slate-500">Please select a member from the dropdown above to generate their QR code</p>
+            <h3 class="text-lg font-semibold text-slate-700 mb-2">{{ __('No Member Selected') }}</h3>
+            <p class="text-sm text-slate-500">{{ __('Please select a member from the dropdown above to generate their QR code') }}</p>
         </div>
     @endif
 </div>

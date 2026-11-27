@@ -8,7 +8,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="{{ asset('images/pkpms-logo.png') }}">
+        <link rel="icon" type="image/jpeg" href="{{ asset('images/loh-johor-logo.jpg') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -32,33 +32,34 @@
                 $featureTwo = $isMerchant ? 'Scan QR Sales' : 'Redeem Rewards';
                 $featureThree = $isMerchant ? 'Merchant Insights' : 'Discover Merchants';
             } else {
-                $heroTitle = 'Welcome to 柔佛州羅氏公会 Portal';
-                $heroDescription = 'Manage your loyalty program, track transactions, and engage with your members all in one place.';
-                $featureOne = 'Member Management';
-                $featureTwo = 'Transactions';
-                $featureThree = 'Analytics';
+                $heroTitle = __('Welcome to 柔佛州羅氏公会 Portal');
+                $heroDescription = __('Manage your loyalty program, track transactions, and engage with your members all in one place.');
+                $featureOne = __('Member Management');
+                $featureTwo = __('Transactions');
+                $featureThree = __('Analytics');
             }
         @endphp
 
         <div class="min-h-screen flex">
             <!-- Left Side - Login Form -->
             <div class="relative flex-1 flex items-center justify-center px-6 py-12 bg-white">
+                <div class="absolute right-6 top-6 z-10"><x-language-switcher /></div>
                 <div class="w-full max-w-md">
                     {{ $slot }}
                 </div>
                 <div class="absolute bottom-4 left-0 right-0 flex justify-center px-6">
-                    <a href="{{ route('privacy-policy') }}" class="text-xs text-slate-500 hover:text-[#ed1c24] hover:underline">
+                    <a href="{{ route('privacy-policy') }}" class="text-xs text-slate-500 hover:text-[#9a7300] hover:underline">
                         Privacy Policy
                     </a>
                 </div>
             </div>
 
             <!-- Right Side - Illustration/Branding -->
-            <div class="hidden lg:flex lg:flex-1 items-center justify-center bg-gradient-to-br from-[#ed1c24] via-[#ed1c24] to-[#ca111b] p-12">
+            <div class="hidden lg:flex lg:flex-1 items-center justify-center bg-gradient-to-br from-[#9a7300] via-[#b8890b] to-[#795b00] p-12">
                 <div class="max-w-lg text-center">
                     <div class="mb-8 flex justify-center">
                         <div class="h-32 w-32 rounded-3xl bg-white flex items-center justify-center shadow-2xl">
-                            <img src="{{ asset('images/pkpms-logo.png') }}" alt="柔佛州羅氏公会 Logo" class="h-20 w-20 object-contain">
+                            <img src="{{ asset('images/loh-johor-logo.jpg') }}" alt="柔佛州羅氏公会 Logo" class="h-20 w-20 object-contain">
                         </div>
                     </div>
                     <h1 class="text-4xl font-bold text-white mb-4">{{ $heroTitle }}</h1>
