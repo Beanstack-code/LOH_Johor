@@ -60,7 +60,14 @@
                     <div class="mb-8 flex justify-center">
                         <img src="{{ asset('images/loh-johor-logo.jpg') }}" alt="柔佛州羅氏公会 Logo" class="h-32 w-32 rounded-3xl object-cover shadow-2xl">
                     </div>
-                    <h1 class="text-4xl font-bold text-white mb-4">{{ $heroTitle }}</h1>
+                    <h1 class="text-4xl font-bold text-white mb-4">
+                        @if ($isAppResetPage)
+                            {{ $heroTitle }}
+                        @else
+                            <span class="block">{{ __('欢迎使用') }}</span>
+                            <span class="block">{{ __('柔佛州羅氏公会管理系统') }}</span>
+                        @endif
+                    </h1>
                     <p class="text-lg text-white/90 leading-relaxed">
                         {{ $heroDescription }}
                     </p>

@@ -30,7 +30,10 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="flex justify-center lg:justify-start mb-6">
             <x-application-logo class="h-12 w-12" />
         </div>
-        <h1 class="text-2xl font-bold text-[#2f3349] mb-2">{{ __('Welcome to 柔佛州羅氏公会! 👋') }}</h1>
+        <h1 class="text-center text-2xl font-bold leading-tight text-[#2f3349] mb-2">
+            <span class="block">{{ __('欢迎使用') }}</span>
+            <span class="block">{{ __('柔佛州羅氏公会管理系统') }}</span>
+        </h1>
         <p class="text-sm text-[#566a7f]">{{ __('Please sign-in to your account and start the adventure') }}</p>
     </div>
 
