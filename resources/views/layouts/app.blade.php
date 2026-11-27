@@ -26,8 +26,13 @@
                     <!-- Page Heading -->
                     @if (isset($header))
                         <header class="mb-6">
-                            <div class="pk-topbar">
-                                {{ $header }}
+                            <div class="pk-topbar flex items-start justify-between gap-4">
+                                <div class="min-w-0 flex-1">
+                                    {{ $header }}
+                                </div>
+                                <div class="hidden shrink-0 lg:block">
+                                    <x-language-switcher />
+                                </div>
                             </div>
                         </header>
                     @endif
