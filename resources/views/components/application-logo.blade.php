@@ -1,4 +1,5 @@
-<svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {{ $attributes }}>
-    <rect x="1.5" y="1.5" width="45" height="45" rx="12" fill="#FFFFFF" stroke="#F0D77C"/>
-    <image href="{{ asset('images/loh-johor-logo.jpg') }}" x="7" y="6" width="35" height="35" preserveAspectRatio="xMidYMid meet"/>
-</svg>
+<img
+    src="{{ asset('images/loh-johor-logo.jpg') }}"
+    alt="柔佛州羅氏公会 Logo"
+    {{ $attributes->merge(['class' => 'rounded-xl border border-[#F0D77C] bg-white object-cover']) }}
+>

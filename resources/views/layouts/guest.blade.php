@@ -58,9 +58,7 @@
             <div class="hidden lg:flex lg:flex-1 items-center justify-center bg-gradient-to-br from-[#9a7300] via-[#b8890b] to-[#795b00] p-12">
                 <div class="max-w-lg text-center">
                     <div class="mb-8 flex justify-center">
-                        <div class="h-32 w-32 rounded-3xl bg-white flex items-center justify-center shadow-2xl">
-                            <img src="{{ asset('images/loh-johor-logo.jpg') }}" alt="柔佛州羅氏公会 Logo" class="h-20 w-20 object-contain">
-                        </div>
+                        <img src="{{ asset('images/loh-johor-logo.jpg') }}" alt="柔佛州羅氏公会 Logo" class="h-32 w-32 rounded-3xl object-cover shadow-2xl">
                     </div>
                     <h1 class="text-4xl font-bold text-white mb-4">{{ $heroTitle }}</h1>
                     <p class="text-lg text-white/90 leading-relaxed">
