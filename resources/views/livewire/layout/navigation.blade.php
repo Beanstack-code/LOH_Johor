@@ -99,8 +99,7 @@ new class extends Component
 
         <div class="p-4 border-t border-slate-200">
             <div class="pk-card p-4">
-                <div class="mb-3"><x-language-switcher /></div>
-                <p class="text-sm font-semibold text-[#2f3349]">{{ auth()->user()->name }}</p>
+                                <p class="text-sm font-semibold text-[#2f3349]">{{ auth()->user()->name }}</p>
                 <p class="text-xs text-slate-500">{{ auth()->user()->email }}</p>
 
                 <button wire:click="logout" class="mt-4 inline-flex w-full items-center justify-center rounded-xl bg-[#ed1c24] px-3 py-2 text-sm font-semibold text-white transition hover:bg-[#ca111b]">
@@ -115,32 +114,34 @@ new class extends Component
     </aside>
 
     <div class="pk-topbar mb-4 lg:hidden">
-        <div class="flex items-center justify-between">
-            <x-language-switcher />
-            <button @click="open = true" class="rounded-xl border border-[#e9eaf3] p-2 text-slate-600">
+        <div class="flex items-center justify-between gap-2">
+            <button @click="open = true" class="shrink-0 rounded-xl border border-[#e9eaf3] p-2 text-slate-600">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5m-16.5 5.25h16.5m-16.5 5.25h16.5" />
                 </svg>
             </button>
 
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-2" wire:navigate>
-                <x-application-logo class="h-8 w-8" />
-                <span class="text-sm font-semibold text-[#2f3349]">柔佛州羅氏公会</span>
+            <a href="{{ route('dashboard') }}" class="flex min-w-0 items-center gap-2" wire:navigate>
+                <x-application-logo class="h-8 w-8 shrink-0" />
+                <span class="truncate text-sm font-semibold text-[#2f3349]">柔佛州羅氏公会</span>
             </a>
 
-            <x-dropdown align="right" width="48">
-                <x-slot name="trigger">
-                    <button class="rounded-xl border border-[#e9eaf3] bg-white px-3 py-2 text-sm font-medium text-slate-600">
-                        {{ auth()->user()->name }}
-                    </button>
-                </x-slot>
+            <div class="flex shrink-0 items-center gap-2">
+                <x-language-switcher />
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="rounded-xl border border-[#e9eaf3] bg-white px-3 py-2 text-sm font-medium text-slate-600">
+                            {{ auth()->user()->name }}
+                        </button>
+                    </x-slot>
 
-                <x-slot name="content">
-                    <button wire:click="logout" class="w-full text-start">
-                        <x-dropdown-link>{{ __('Log Out') }}</x-dropdown-link>
-                    </button>
-                </x-slot>
-            </x-dropdown>
+                    <x-slot name="content">
+                        <button wire:click="logout" class="w-full text-start">
+                            <x-dropdown-link>{{ __('Log Out') }}</x-dropdown-link>
+                        </button>
+                    </x-slot>
+                </x-dropdown>
+            </div>
         </div>
     </div>
 
@@ -162,8 +163,7 @@ new class extends Component
             </div>
 
             <div class="flex-1 overflow-y-auto p-4">
-                <div class="mb-4"><x-language-switcher /></div>
-                {{-- Dashboard --}}
+                                {{-- Dashboard --}}
                 <div class="space-y-1">
                     <a href="{{ route('dashboard') }}" class="pk-sidebar-link {{ request()->routeIs('dashboard') ? 'pk-sidebar-link-active' : '' }}" wire:navigate>
                         <svg class="h-4 w-4 shrink-0" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24">
